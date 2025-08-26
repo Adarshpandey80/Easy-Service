@@ -1,25 +1,125 @@
-*{
- margin: 0;
- padding: 0;
+/* service style */
+
+
+.services {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f8f9fc;
 }
 
-.images{
-     text-align: center;
-    
-    padding: 10px;
+.services h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #222;
 }
 
-.images img {
-  
-    height: 50px;
-    height: 50px;
-    border-radius: 10px;
-    transition: transform 0.4s ease, box-shadow 0.9s ease;
-   margin-left: 10px;
-    
+.services-search {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px auto 40px;
+  max-width: 500px;
 }
 
-.images img:hover{
-     transform: scale(1.025);
-       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+.search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
 }
+
+.search-input:focus {
+  border: 2px solid #ffb400;
+}
+
+.search-btn {
+  background: #ffb400;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background: #e09e00;
+  transform: scale(1.05);
+}
+
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+.service-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 50%;      /* makes the image circular */
+  border: 2px solid #eee;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.service-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 20px;
+  min-height: 50px; /* keeps cards aligned */
+}
+
+.service-card .btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: black;
+  border: 2px solid black;
+  border-radius: 6px;
+  /* font-weight: bold; */
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.service-card .btn:hover {
+  background: black;
+  color: white;
+  transform: scale(1.05);
+}
+

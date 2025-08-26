@@ -1,12 +1,37 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
 
 
+/* image applications  */
+.images{
+     text-align: center;
+    
+    padding: 10px;
+}
+
+.images img {
+  
+    height: 50px;
+    height: 50px;
+    border-radius: 10px;
+    transition: transform 0.4s ease, box-shadow 0.9s ease;
+   margin-left: 10px;
+    
+}
+
+.images img:hover{
+     transform: scale(1.025);
+       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
 
 
 /* hero section style */
 
 .hero {
   position: relative;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background: url("/assets/technician.jpg") no-repeat center center/cover;
   display: flex;
@@ -72,3 +97,5 @@
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+
