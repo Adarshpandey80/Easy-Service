@@ -33,10 +33,7 @@ const Home = () => {
               Fridge, Cooler, Washing Machine, AC & more – Expert Service at Your
               Doorstep
             </p>
-            <div className="hero-buttons">
-              <button className="btn primary">Book a Service</button>
-              <button className="btn secondary">Search Service Near You</button>
-            </div>
+          
           </div>
         </div>
       </section>

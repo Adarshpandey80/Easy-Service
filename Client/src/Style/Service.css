@@ -33,22 +33,23 @@
 }
 
 .search-input:focus {
-  border: 2px solid #ffb400;
+  border: 2px solid black;
 }
 
 .search-btn {
-  background: #ffb400;
-  color: #000;
-  border: none;
+  background: transparent;
+  color: black;
+  border: 2px solid black;
   border-radius: 6px;
   padding: 10px 20px;
-  font-weight: bold;
+  
   cursor: pointer;
   transition: 0.3s;
 }
 
 .search-btn:hover {
-  background: #e09e00;
+  background: black;
+  color: white;
   transform: scale(1.05);
 }
 
@@ -123,3 +124,66 @@
   transform: scale(1.05);
 }
 
+/* // css for shop grid */
+.shops {
+  padding: 40px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.shops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.shop-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shop-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.shop-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.shop-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #222;
+}
+
+.shop-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.shop-card .btn {
+  margin-top: 10px;
+  background: transparent;
+  color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 8px 15px;
+  
+  cursor: pointer;
+}
+
+.shop-card .btn:hover {
+  background: black;
+  color: white;
+}

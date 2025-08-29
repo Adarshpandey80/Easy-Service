@@ -3,26 +3,94 @@ import React from 'react'
 
 const Services = () => {
 
-  const services = [
-    { img: "/Images/friz.png", title: "Fridge Repair", desc: "Cooling issues, gas refill, compressor repair" },
-    { img: "/Images/cooler.jpg", title: "Cooler Service", desc: "Motor replacement, cooling pad service" },
-    { img: "/Images/washingmachine.avif", title: "Washing Machine Repair", desc: "Top/Front load, fully automatic service" },
-    { img: "/Images/AC.webp", title: "AC Service & Installation", desc: "Gas refill, cooling & full service" },
-    { img: "/Images/wiring.jpg", title: "Electrical Wiring", desc: "Wiring, short circuit, switchboard repair" },
-    { img: "/Images/Inverter.jpg", title: "Inverter / UPS Repair", desc: "Battery replacement, power backup issues" },
-    { img: "/Images/Geyser.webp", title: "Geyser Repair", desc: "Heating element, leakage, thermostat issues" },
-    { img: "/Images/TV.jpg", title: "TV Repair", desc: "LED/LCD/Smart TV sound & display issues" },
-    { img: "/Images/Fan.webp", title: "Fan Repair", desc: "Ceiling fans, exhaust, pedestal motor issues" },
-    { img: "/Images/microwave.jpg", title: "Microwave Repair", desc: "Heating issues, door switch, magnetron fix" },
-    { img: "/Images/waterPurifier.webp", title: "RO Service", desc: "Filter replacement, purifier & motor issues" },
-    { img: "Images/mixer.jpg", title: "Mixer Repair", desc: "Jar blade, motor, wiring & speed control issues" },
+  const shopImages = [
+    "/Images/shopImage/shop1.webp",
+    "/Images/shopImage/shop2.webp",
+    "/Images/shopImage/shop3.webp",
+    "/Images/shopImage/shop4.webp",
+    "/Images/shopImage/shop5.avif",
+    
   ];
+
+  const shops = [
+    {
+      name: "CoolTech Services",
+      services: ["AC Repair", "Cooler Repair", "Fridge Service"],
+      location: "Lucknow, UP",
+      rating: 4.5,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "HomeCare Electricians",
+      services: ["Washing Machine Repair", "Electrical Wiring", "Inverter Service"],
+      location: "Kanpur, UP",
+      rating: 4.7,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "QuickFix Appliances",
+      services: ["Geyser Repair", "Microwave Fix", "Fan Repair"],
+      location: "Varanasi, UP",
+      rating: 4.3,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "Sharma Electricals",
+      services: ["TV Repair", "Mixer/Grinder Fix", "Wiring Work"],
+      location: "Prayagraj, UP",
+      rating: 4.6,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "Metro Appliance Care",
+      services: ["Fridge Service", "AC Gas Refill", "Cooler Motor Repair"],
+      location: "Noida, UP",
+      rating: 4.4,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "City Power Solutions",
+      services: ["Inverter Repair", "UPS Battery Change", "Wiring"],
+      location: "Gorakhpur, UP",
+      rating: 4.8,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "Apna Service Center",
+      services: ["Washing Machine", "Microwave", "Fan Repair"],
+      location: "Delhi NCR",
+      rating: 4.5,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "Trusty Electricians",
+      services: ["Geyser Fix", "TV Repair", "Mixer/Grinder Repair"],
+      location: "Agra, UP",
+      rating: 4.2,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "SmartFix Electronics",
+      services: ["Fridge Repair", "AC Installation", "RO Service"],
+      location: "Bareilly, UP",
+      rating: 4.9,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+    {
+      name: "EasyHome Repairs",
+      services: ["Cooler Service", "Microwave", "Washing Machine"],
+      location: "Lucknow, UP",
+      rating: 4.6,
+      img: shopImages[Math.floor(Math.random() * shopImages.length)],
+    },
+  ];
+
   return (
 
     <>
 
-      <section className="services">
-        <h2>Popular Services</h2>
+      <section className="shops">
+        <h2>Nearby Shops</h2>
         <div className="services-search">
           <input
             type="text"
@@ -31,17 +99,20 @@ const Services = () => {
           />
           <button className="btn search-btn">Search</button>
         </div>
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <div className="service-card" key={index}>
-              <img src={service.img} alt={service.title} className="service-img" />
-              <h3>{service.title}</h3>
-              <p>{service.desc}</p>
+        <div className="shops-grid">
+          {shops.map((shop, index) => (
+            <div className="shop-card" key={index}>
+              <img src={shop.img} alt={shop.name} className="shop-img" />
+              <h3>{shop.name}</h3>
+              <p><strong>Services:</strong> {shop.services.join(", ")}</p>
+              <p><strong>Location:</strong> {shop.location}</p>
+              <p><strong>Rating:</strong> ⭐ {shop.rating}</p>
               <button className="btn">Book Now</button>
             </div>
           ))}
         </div>
       </section>
+
     </>
   )
 }
