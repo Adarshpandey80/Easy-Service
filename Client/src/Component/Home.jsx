@@ -1,11 +1,17 @@
 import React from 'react'
+import axios from 'axios'
+import { useState } from 'react'
 import '../Style/Home.css'
 import Services from './Services.jsx'
 
 
 const Home = () => {
 
-
+ const API_URL = "http://localhost:3004/";
+  const [data, setData] = useState();
+  const res = axios.get(API_URL);
+  setData(res.data);
+  
   
 
   return (
