@@ -1,4 +1,5 @@
 import React from 'react'
+import '../Style/UserFormStyle/Signup.css'
 
 const UserSignupForm = () => {
 
@@ -13,10 +14,14 @@ const UserSignupForm = () => {
        const {name, value} = e.target;
        setFormData({...formData, [name]: value})
     }
+    const signupSubmit = (e)=>{
+      e.preventDefault();
+      console.log(formData);
+    }
   return (
     <>
     <div className="signup-container">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="signup-form" onSubmit={ signupSubmit } method='POST' action='/api/signup' >
         <h2>Create Account</h2>
 
         <label>Username</label>
@@ -59,7 +64,7 @@ const UserSignupForm = () => {
           required
         />
 
-        <button type="submit">Sign Up</button>
+        <input type="submit" value="Sign Up" className="submit-btn" />
       </form>
     </div>
     </>
