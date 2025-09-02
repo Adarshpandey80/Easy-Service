@@ -5,7 +5,8 @@ import Nav from './Component/Nav.jsx'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Component/Home.jsx'
 import Career from './Component/Career.jsx'
-
+import UserSignupForm from './Component/UserSignupForm.jsx';
+import UserLoginForm from './Component/UserLoginForm.jsx';
 import Footer from './Component/Footer.jsx'
 import ShopkeeperDashboard from './Shopkeeper/ShopkeeperDashboard.jsx';
 
@@ -24,7 +25,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/career" element={<Career />} />
-      <Route path="/shopdash" element={<ShopkeeperDashboard />} />
+      <Route path="/UserLogin" element={<UserLoginForm />} />
     </Routes>
     <Footer />
    </Router>

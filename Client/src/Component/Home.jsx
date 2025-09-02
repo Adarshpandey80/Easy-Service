@@ -7,13 +7,20 @@ import Services from './Services.jsx'
 
 const Home = () => {
 
- const API_URL = "http://localhost:3004/";
-  const [data, setData] = useState();
-  const res = axios.get(API_URL);
-  setData(res.data);
-  
-  
+ const [data, setData] = useState([])
 
+  React.useEffect(() => {
+    axios.get('/api')
+      .then((res) => {
+        setData(res.data)
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err , "error while fetching data");
+      })
+  
+  
+  }, [])
   return (
     <>
 

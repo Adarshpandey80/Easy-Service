@@ -4,6 +4,7 @@ import { useState } from 'react'
 import '../Style/Navbar.css'
 
 
+
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
   return (
@@ -22,9 +23,10 @@ const Nav = () => {
       {/* Nav links */}
       <ul className={`nav-links ${isOpen ? "active" : ""}`}>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/services">Services</Link></li>
         <li><Link to="/career">Career</Link></li>
-        <li><Link to="/shopdash">Your Shop</Link></li>
+        <li><Link to="/UserLogin">Login</Link></li>
+        
+
       </ul>
     </nav>
    </>
