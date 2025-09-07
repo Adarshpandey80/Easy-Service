@@ -1,0 +1,81 @@
+.career-page {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+  background: #f4f6f8;
+  min-height: 100vh;
+}
+
+.career-container {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 700px;
+}
+
+.career-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.career-container p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.registration-form h3 {
+  margin-top: 20px;
+  color: #444;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="tel"],
+.registration-form input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.services-checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #0077ff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #005fd1;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px){
+  .career-container {
+    padding: 30px 20px;
+  }
+}

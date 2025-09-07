@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !="production"){
   require('dotenv').config();
 }
-const mongoose = require("mongoose");
+
 const  connectDB = require("./src/db/db");
 const app = require("./src/app");
 const PORT = process.env.PORT || 3004;
