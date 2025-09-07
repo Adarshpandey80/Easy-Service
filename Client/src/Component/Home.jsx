@@ -5,9 +5,11 @@ import '../Style/Home.css'
 import Services from './Services.jsx'
 
 
+
 const Home = () => {
 
  const [data, setData] = useState([])
+
 
   React.useEffect(() => {
     axios.get('/api')
@@ -30,7 +32,7 @@ const Home = () => {
         <img src="/Images/friz.png" alt="" />
         <img src="/Images/Induction.webp" alt="" />
         <img src="/Images/Inverter.jpg" alt="" />
-        <img src="/Images/microware.jpg" alt="" />
+        <img src="/Images/microwave.jpg" alt="" />
         <img src="/Images/mixer.jpg" alt="" />
         <img src="/Images/TV.jpg" alt="" />
         <img src="/Images/washingmachine.avif" alt="" />
@@ -46,11 +48,11 @@ const Home = () => {
               Fridge, Cooler, Washing Machine, AC & more – Expert Service at Your
               Doorstep
             </p>
-          
+            <button onClick={() => setShowModal(true)}>Login</button>
           </div>
         </div>
-      </section>
-     
+       </section>
+    
      <Services/>
 
     </>

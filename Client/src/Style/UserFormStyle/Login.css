@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 70vh;
   background: #f4f6f9;
 }
 
@@ -47,6 +47,22 @@
 .login-form input:focus {
   border-color: #007bff;
 }
+/* Submit Button */
+.login-form .submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 6px;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+ 
+}
+.login-form .submit-btn:hover {
+  background: black;
+  color: white;
+}
 
 /* Signup link */
 .login-form .signup-link {
@@ -57,7 +73,7 @@
 }
 
 .login-form .signup-link a {
-  color: #007bff;
+  color: black;
   text-decoration: none;
   font-weight: 500;
 }

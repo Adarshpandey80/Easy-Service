@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const parser = require("body-parser");
-const mongoose = require("mongoose");
+
 
 app.use(cors());
 app.use(parser.json());
@@ -18,8 +18,8 @@ app.get("/signup", (req, res) => {
     res.render("UserSignupForm.jsx");
 });
 app.get("/login", (req, res) => {
-    res.send("Login Page");
+    res.render("UserLoginForm.jsx");
 });
-app.listen(3004, () => {
-    console.log("Server is running on port 3004");
-});
+
+
+module.exports = app;

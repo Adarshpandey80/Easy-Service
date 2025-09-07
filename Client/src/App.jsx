@@ -11,13 +11,7 @@ import Footer from './Component/Footer.jsx'
 import ShopkeeperDashboard from './Shopkeeper/ShopkeeperDashboard.jsx';
 
 
-
-
-
 function App() {
- 
- 
-
   return (
     <>
    <Router>
@@ -25,7 +19,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/career" element={<Career />} />
-      <Route path="/UserLogin" element={<UserLoginForm />} />
+      <Route path="/login" element={<UserLoginForm />} />
       <Route path="/signup" element={<UserSignupForm />} />
     </Routes>
     <Footer />

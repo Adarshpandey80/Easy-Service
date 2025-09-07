@@ -24,9 +24,8 @@ const Nav = () => {
       <ul className={`nav-links ${isOpen ? "active" : ""}`}>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/career">Career</Link></li>
-        <li><Link to="/UserLogin">Login</Link></li>
+        <li><Link to="/login">Login</Link></li>
         
-
       </ul>
     </nav>
    </>
