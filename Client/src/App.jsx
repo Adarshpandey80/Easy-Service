@@ -8,6 +8,7 @@ import Career from './Component/Career.jsx'
 import UserSignupForm from './Component/UserSignupForm.jsx';
 import UserLoginForm from './Component/UserLoginForm.jsx';
 import Footer from './Component/Footer.jsx'
+import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
 
 
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/career" element={<Career />} />
       <Route path="/login" element={<UserLoginForm />} />
       <Route path="/signup" element={<UserSignupForm />} />
+      <Route path="/shopkeeperForm" element={<ShopkeeperForm />} />
     </Routes>
     <Footer />
    </Router>

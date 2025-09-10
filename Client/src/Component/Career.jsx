@@ -2,6 +2,7 @@ import React from 'react'
  import '../Style/Career.css'
 import { Link } from 'react-router-dom';
 
+
 const Career = () => {
   return (
     <div className="career-page">
@@ -14,7 +15,7 @@ const Career = () => {
           Get more orders, manage services efficiently, and reach new 
           clients effortlessly.
         </p>
-        <Link to="/register-shop" className="register-btn">
+        <Link to="/shopkeeperForm" className="register-btn">
           Register Your Shop
         </Link>
       </section>
@@ -83,7 +84,7 @@ const Career = () => {
       <section className="career-cta">
         <h2>Ready to Expand Your Shop?</h2>
         <p>Join hundreds of shop owners already earning with Easy Service.</p>
-        <Link to="/register-shop" className="register-btn">
+        <Link to="/shopkeeperForm" className="register-btn">
           Get Started Now
         </Link>
       </section>

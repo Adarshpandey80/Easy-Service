@@ -21,6 +21,10 @@ app.get("/login", (req, res) => {
     res.render("UserLoginForm.jsx");
 });
 
+app.get ("/shopkeeperForm", (req, res) => {
+    res.render("ShopkeeperForm.jsx");
+});
+
 
 
 module.exports = app;

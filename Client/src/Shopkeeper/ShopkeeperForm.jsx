@@ -1,6 +1,92 @@
 import React from 'react'
+import '../Style/ShopOwner/ShopOwnerForm.css'
+
 
 const ShopkeeperForm = () => {
+  const [formData, setFormData] = React.useState({
+    ownerName: '',
+    email: '',
+    phone: '',
+    shopName: '',
+    services: [],
+    address: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const [errors, setErrors] = React.useState({});
+
+  const serviceOptions = [
+    "AC Repair",
+    "Cooler Repair",
+    "Fridge Service",
+    "Washing Machine Repair",
+    "Electrical Wiring",
+    "Inverter Service",
+    "Geyser Repair",
+    "Microwave Fix",
+    "Fan Repair",
+    "TV Repair",
+    "Mixer/Grinder Fix",
+    "Wiring Work",
+    "AC Gas Refill",
+    "Cooler Motor Repair",
+    "Inverter Repair",
+    "UPS Battery Change"
+  ];
+  
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      let updatedServices = [...formData.services];
+      if (checked) {
+        updatedServices.push(value);
+      } else {
+        updatedServices = updatedServices.filter(service => service !== value);
+      }
+      setFormData({ ...formData, services: updatedServices });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const validate = () => {
+    let tempErrors = {};
+    if (!formData.ownerName) tempErrors.ownerName = "Owner name is required";
+    if (!formData.email) tempErrors.email = "Email is required";
+    if (!formData.phone) tempErrors.phone = "Phone number is required";
+    if (!formData.shopName) tempErrors.shopName = "Shop name is required";
+    if (formData.services.length === 0) tempErrors.services = "At least one service must be selected";
+    if (!formData.address) tempErrors.address = "Address is required";
+    if (!formData.username) tempErrors.username = "Username is required";
+    if (!formData.password) tempErrors.password = "Password is required";
+    if (formData.password !== formData.confirmPassword) tempErrors.confirmPassword = "Passwords do not match";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      // Submit form data to server or perform desired actions
+      console.log("Form submitted successfully", formData);
+      // Reset form after submission
+      setFormData({
+        ownerName: '',
+        email: '',
+        phone: '',
+        shopName: '',
+        services: [],
+        address: '',
+        username: '',
+        password: '',
+        confirmPassword: ''
+      });
+      setErrors({});
+    }
+  };
+
   return (
     <div className="career-page">
       <div className="career-container">

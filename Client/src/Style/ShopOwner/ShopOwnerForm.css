@@ -1,11 +1,17 @@
+/* ✅ Page wrapper */
 .career-page {
   display: flex;
   justify-content: center;
-  padding: 50px 20px;
+  align-items: center;    /* centers vertically */
+  /* padding: 20px; */
   background: #f4f6f8;
   min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;     /* no horizontal scroll */
 }
 
+/* ✅ Form container */
 .career-container {
   background: #fff;
   padding: 40px 30px;
@@ -13,24 +19,28 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 700px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+/* ✅ Headings */
 .career-container h2 {
   text-align: center;
   color: #333;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 .career-container p {
   text-align: center;
   color: #555;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  font-size: 1rem;
 }
 
-.registration-form h3 {
-  margin-top: 20px;
-  color: #444;
-}
-
+/* ✅ Inputs */
 .registration-form input[type="text"],
 .registration-form input[type="email"],
 .registration-form input[type="tel"],
@@ -41,41 +51,122 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
 }
 
+.registration-form input:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 4px rgba(0, 119, 255, 0.3);
+  outline: none;
+}
+
+/* ✅ Checkbox */
 .services-checkbox {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 15px;
 }
 
 .checkbox-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  font-size: 0.95rem;
 }
 
+/* ✅ Button */
 .submit-btn {
   width: 100%;
   padding: 15px;
-  background-color: #0077ff;
-  color: white;
+  background-color: white;
+
+  color: black;
   font-weight: bold;
-  border: none;
+  border: 2px solid black;
   border-radius: 6px;
   margin-top: 20px;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 1.1rem;
 }
 
 .submit-btn:hover {
-  background-color: #005fd1;
+  background-color: black;
+  color: white;
 }
 
-/* Responsive */
-@media screen and (max-width: 768px){
+
+
+/* ============= Responsive ============= */
+
+/* Tablets */
+@media screen and (max-width: 992px) {
   .career-container {
     padding: 30px 20px;
+    max-width: 90%;
+  }
+
+  .career-container h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Mobiles */
+@media screen and (max-width: 576px) {
+  .career-page {
+    padding: 10px;
+    /* overflow-x: hidden; */
+  }
+
+  .career-container {
+    padding: 20px 15px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .career-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .career-container p {
+    font-size: 0.9rem;
+  }
+
+  .registration-form input {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .submit-btn {
+    padding: 12px;
+    font-size: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .services-checkbox {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .checkbox-item label {
+    max-width: calc(100% - 20px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
