@@ -1,5 +1,6 @@
 import React from 'react'
 import '../Style/ShopOwner/ShopOwnerForm.css'
+import { Link } from 'react-router-dom'
 
 
 const ShopkeeperForm = () => {
@@ -133,6 +134,9 @@ const ShopkeeperForm = () => {
           {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
           <button type="submit" className="submit-btn">Register Shop</button>
+          <p className="login-link">
+          Already have an account? <Link to="/shopOwnerLogin">Login</Link>
+        </p>
         </form>
       </div>
     </div>

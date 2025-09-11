@@ -9,13 +9,31 @@ import UserSignupForm from './Component/UserSignupForm.jsx';
 import UserLoginForm from './Component/UserLoginForm.jsx';
 import Footer from './Component/Footer.jsx'
 import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
+import ShopOwnerLoginForm from './Shopkeeper/ShopOwnerLoginForm.jsx';
+import ShopkeeperNavbar from './Shopkeeper/ShopkeeperNavbar.jsx';
+
 
 
 
 function App() {
   return (
     <>
-   <Router>
+    
+    <Router>
+      <ShopkeeperNavbar/>
+      <Routes>
+
+      </Routes>
+    </Router>
+
+
+
+
+
+
+
+
+   {/* <Router>
     <Nav />
     <Routes>
       <Route path="/" element={<Home />} />
@@ -23,9 +41,11 @@ function App() {
       <Route path="/login" element={<UserLoginForm />} />
       <Route path="/signup" element={<UserSignupForm />} />
       <Route path="/shopkeeperForm" element={<ShopkeeperForm />} />
+      <Route path="/shopOwnerLogin" element={<ShopOwnerLoginForm />} />
+      
     </Routes>
     <Footer />
-   </Router>
+   </Router> */}
       
     </>
   )
