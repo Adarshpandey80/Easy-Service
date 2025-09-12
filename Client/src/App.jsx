@@ -22,7 +22,7 @@ function App() {
     <Router>
       <ShopkeeperNavbar/>
       <Routes>
-
+       
       </Routes>
     </Router>
 
