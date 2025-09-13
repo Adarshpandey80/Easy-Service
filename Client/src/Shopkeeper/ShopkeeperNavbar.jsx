@@ -31,14 +31,14 @@ const Nav = () => {
           {isWorkerOpen && (
             <ul className="dropdown-menu">
               <li className={location.pathname === "/workers/add" ? "active" : ""}>
-                <Link to="/workers/add">Add Worker</Link>
+                <Link to="/addworkerform">Add Worker</Link>
               </li>
               <li className={location.pathname === "/workers/list" ? "active" : ""}>
-                <Link to="/workers/list">Worker List</Link>
+                <Link to="/workerlist">Worker List</Link>
               </li>
-              <li className={location.pathname === "/workers/cards" ? "active" : ""}>
+              {/* <li className={location.pathname === "/workers/cards" ? "active" : ""}>
                 <Link to="/workers/cards">Worker Cards</Link>
-              </li>
+              </li> */}
             </ul>
           )}
         </li>

@@ -11,7 +11,9 @@ import Footer from './Component/Footer.jsx'
 import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
 import ShopOwnerLoginForm from './Shopkeeper/ShopOwnerLoginForm.jsx';
 import ShopkeeperNavbar from './Shopkeeper/ShopkeeperNavbar.jsx';
-
+import Addworkerform from './Shopkeeper/ShopOwnerWorkers/Addworkerform.jsx';
+import WorkerList from './Shopkeeper/ShopOwnerWorkers/WorkerList.jsx';
+import WorkerCard from './Shopkeeper/ShopOwnerWorkers/WorkerCard.jsx';
 
 
 
@@ -22,7 +24,9 @@ function App() {
     <Router>
       <ShopkeeperNavbar/>
       <Routes>
-       
+        <Route path="/addworkerform" element={<Addworkerform />} />
+        <Route path="/workerlist" element={<WorkerList />} />
+        <Route path="/workercard" element={<WorkerCard />} />
       </Routes>
     </Router>
 

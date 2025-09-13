@@ -1,0 +1,98 @@
+.worker-form-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
+}
+
+.worker-form-card {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.worker-form-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.worker-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.worker-form label {
+  font-weight: 600;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.worker-form input,
+.worker-form select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.95rem;
+  transition: border 0.2s;
+}
+
+/* .worker-form input:focus,
+.worker-form select:focus {
+  border: 1px solid #1976d2;
+} */
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.submit-btn {
+  border: 2px solid black;
+  color: black;
+}
+
+.cancel-btn {
+  background: whitesmoke;
+  border: 2px solid black;
+  color: black;
+}
+
+.submit-btn:hover {
+  background: black;
+    color: white;
+}
+
+.cancel-btn:hover {
+  background: gray;
+  color: black;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    margin: 8px 0;
+  }
+}
