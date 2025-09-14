@@ -1,0 +1,232 @@
+.orders-page {
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.orders-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1b263b;
+}
+
+/* Orders Grid */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Order Card */
+.order-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+}
+
+.order-card h2 {
+  margin-bottom: 10px;
+  color: #0d1b2a;
+}
+
+.status {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.assigned {
+  background: #d4edda;
+  color: #155724;
+}
+
+.assign-btn {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  background: rgba(255, 0, 0, 0.641);
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+.assign-btn:hover:not(:disabled) {
+  background: rgba(255, 0, 0, 0.87);
+}
+
+.assign-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+/* Worker List */
+.worker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.worker-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.worker-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.worker-photo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.worker-role {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.worker-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.worker-item.available {
+  border-left: 5px solid #28a745; /* Green */
+}
+
+.worker-item.busy {
+  border-left: 5px solid #ffc107; /* Yellow */
+}
+
+.worker-item.offline {
+  border-left: 5px solid #dc3545; /* Red */
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.available {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.busy {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.offline {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Small Assign Button */
+.assign-btn-small {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background:  gray;
+  color: #fff;
+  font-size: 0.8rem;
+  transition: background 0.3s;
+}
+
+.assign-btn-small:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.assign-btn-small:hover:not(:disabled) {
+  background: #555;
+}
+
+/* Modal Footer */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #ddd;
+  font-weight: 500;
+}
+
+.cancel-btn:hover {
+  background: #bbb;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .worker-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .worker-actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+}

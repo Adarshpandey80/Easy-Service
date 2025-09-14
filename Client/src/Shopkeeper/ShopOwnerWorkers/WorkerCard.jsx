@@ -44,7 +44,7 @@ const WorkerEditForm = () => {
   };
 
   return (
-    <div className="worker-form-container">
+    <div className="worker-form-card-container">
       <div className="worker-form-card">
         <h2>Edit Worker</h2>
         <form className="worker-form" onSubmit={handleSubmit}>
