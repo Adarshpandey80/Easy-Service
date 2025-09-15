@@ -38,7 +38,7 @@ const WorkersList = () => {
         {workers.map((worker) => (
           <div key={worker.id} className="worker-card">
             <img src={worker.photo} alt={worker.name} className="worker-photo" />
-            <div className="worker-info">
+            <div className="workers-info">
               <h3>{worker.name}</h3>
               <p><strong>📞</strong> {worker.phone}</p>
               <p><strong>👷</strong> {worker.role}</p>
@@ -46,7 +46,7 @@ const WorkersList = () => {
                 {worker.status}
               </span>
             </div>
-            <div className="worker-actions">
+            <div className="workers-actions">
               <button className="edit-btn" onClick={() => handleEdit(worker.id)}>Edit</button>
               <button className="delete-btn" onClick={() => handleDelete(worker.id)}>Delete</button>
             </div>

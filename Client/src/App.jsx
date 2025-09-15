@@ -15,6 +15,7 @@ import Addworkerform from './Shopkeeper/ShopOwnerWorkers/Addworkerform.jsx';
 import WorkerList from './Shopkeeper/ShopOwnerWorkers/WorkerList.jsx';
 import WorkerCard from './Shopkeeper/ShopOwnerWorkers/WorkerCard.jsx';
 import ShopOrder from './Shopkeeper/ShopOrder.jsx';
+import Dashboard from './Shopkeeper/ShopOwnerDashboard.jsx';
 
 
 
@@ -25,11 +26,13 @@ function App() {
     <Router>
       <ShopkeeperNavbar/>
       <Routes>
+        <Route path="/" element={<Dashboard />} />
         <Route path="/addworkerform" element={<Addworkerform />} />
         <Route path="/workerlist" element={<WorkerList />} />
         <Route path="/workercard" element={<WorkerCard />} />
         <Route path="/orders" element={<ShopOrder />} />
       </Routes>
+      <Footer />
     </Router>
 
 
