@@ -22,7 +22,7 @@ const Nav = () => {
           <Link to="/">Dashboard</Link>
         </li>
         <li className={location.pathname === "/career" ? "active" : ""}>
-          <Link to="/career">My Services</Link>
+          <Link to="/services">My Services</Link>
         </li>
 
         {/* Workers Dropdown */}
