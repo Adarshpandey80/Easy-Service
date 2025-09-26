@@ -10,7 +10,7 @@ const Nav = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">Easy-Service-Partner</Link>
+        <Link to="/">Service-Partner</Link>
       </div>
 
       <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>

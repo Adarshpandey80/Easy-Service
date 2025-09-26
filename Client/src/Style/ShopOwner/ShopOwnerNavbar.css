@@ -10,7 +10,7 @@
   height: 70px;
   background: white;
   display: flex;
-  justify-content: center; /* Center nav links */
+  justify-content: center;/* Center nav links */
   align-items: center;
   position: relative;
   font-family: Arial, sans-serif;
