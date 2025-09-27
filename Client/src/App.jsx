@@ -17,6 +17,7 @@ import WorkerCard from './Shopkeeper/ShopOwnerWorkers/WorkerCard.jsx';
 import ShopOrder from './Shopkeeper/ShopOrder.jsx';
 import Dashboard from './Shopkeeper/ShopOwnerDashboard.jsx';
 import ShopOwnerServices from './Shopkeeper/ShopOwnerServices.jsx';
+import Payments from './Shopkeeper/Payments.jsx';
 
 
 
@@ -32,7 +33,7 @@ function App() {
         <Route path="/workercard" element={<WorkerCard />} />
         <Route path="/orders" element={<ShopOrder />} />
         <Route path="/services" element={<ShopOwnerServices />} />
-        <Route path="/payment" element={<h1>Payment Page</h1>} />
+        <Route path="/payment" element={<Payments/>} />
         <Route path="/messages" element={<h1>Messages Page</h1>} />
         <Route path="/profile" element={<h1>Profile Page</h1>} />
         <Route path="/logout" element={<h1>Logout Page</h1>} />
