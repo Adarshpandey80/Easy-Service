@@ -18,7 +18,6 @@ const Payments = () => {
     const txnDate = new Date(txn.date);
     const start = startDate ? new Date(startDate) : null;
     const end = endDate ? new Date(endDate) : null;
-
     if (start && txnDate < start) return false;
     if (end && txnDate > end) return false;
     return true;
@@ -26,39 +25,37 @@ const Payments = () => {
 
   return (
     <div className="payments-page">
+
       {/* Wallet Summary */}
       <div className="wallet-summary">
         <h2>Wallet Balance: ₹12,500</h2>
         <button className="withdraw-btn">Withdraw</button>
       </div>
 
-      {/* Date Filters */}
+      {/* Filters */}
       <div className="filters-container">
-      <div>
-         <h3>Transaction History</h3>
+        <h3>Transaction History</h3>
+        <div className="filters">
+          <label>
+            From:{" "}
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </label>
+          <label>
+            To:{" "}
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </label>
+        </div>
       </div>
-     
-      <div className="filters">
-        <label>
-          From:{" "}
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-        </label>
-        <label>
-          To:{" "}
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </label>
-      </div>
- </div>
-      {/* Transactions */}
-    
+
+      {/* Transactions Table */}
       <table className="payments-table">
         <thead>
           <tr>
@@ -74,12 +71,12 @@ const Payments = () => {
           {filteredTransactions.length > 0 ? (
             filteredTransactions.map((txn) => (
               <tr key={txn.id}>
-                <td>{txn.id}</td>
-                <td>{txn.customer}</td>
-                <td>{txn.service}</td>
-                <td>{txn.amount}</td>
-                <td>{txn.date}</td>
-                <td>
+                <td data-label="Payment ID">{txn.id}</td>
+                <td data-label="Customer">{txn.customer}</td>
+                <td data-label="Service">{txn.service}</td>
+                <td data-label="Amount (₹)">{txn.amount}</td>
+                <td data-label="Date">{txn.date}</td>
+                <td data-label="Status">
                   <span className={`status ${txn.status.toLowerCase()}`}>
                     {txn.status}
                   </span>

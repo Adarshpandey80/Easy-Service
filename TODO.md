@@ -1,0 +1,3 @@
+- [x] Edit Messages.css to enable horizontal scrolling for message elements in responsive design
+  - [x] Add overflow-x: auto to .chat-messages in @media (max-width: 768px)
+  - [x] Add white-space: nowrap to .message in @media (max-width: 768px)
