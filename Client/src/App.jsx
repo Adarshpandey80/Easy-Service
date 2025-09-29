@@ -19,6 +19,7 @@ import Dashboard from './Shopkeeper/ShopOwnerDashboard.jsx';
 import ShopOwnerServices from './Shopkeeper/ShopOwnerServices.jsx';
 import Payments from './Shopkeeper/Payments.jsx';
 import Messages from './Shopkeeper/Messages.jsx';
+import ShopOwnerProfile from './Shopkeeper/Profile.jsx';
 
 
 
@@ -36,7 +37,7 @@ function App() {
         <Route path="/services" element={<ShopOwnerServices />} />
         <Route path="/payment" element={<Payments/>} />
         <Route path="/messages" element={<Messages/>} />
-        <Route path="/profile" element={<h1>Profile Page</h1>} />
+        <Route path="/profile" element={<ShopOwnerProfile/>} />
         <Route path="/logout" element={<h1>Logout Page</h1>} />
       </Routes>
       <Footer />
