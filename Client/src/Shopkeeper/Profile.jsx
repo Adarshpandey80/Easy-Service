@@ -92,13 +92,6 @@ const ShopOwnerProfile = () => {
           </div>
         </div>
 
-        {/* Security */}
-        <div className="profile-card">
-          <h3>Security</h3>
-          <p><strong>Last Login:</strong> {profile.lastLogin}</p>
-          <button className="change-pass-btn">Change Password</button>
-          <button className="twofa-btn">Enable 2FA</button>
-        </div>
       </div>
 
       {/* Settings Modal */}
@@ -171,7 +164,7 @@ const ShopOwnerProfile = () => {
                   <h3>Security Settings</h3>
                   <div className="security-actions-btns">
                      <button className="change-pass-btn">Change Password</button>
-                  <button className="twofa-btn">Enable 2FA</button>
+                     <button className="twofa-btn">Enable 2FA</button>
                   </div>
                  
                 </div>
