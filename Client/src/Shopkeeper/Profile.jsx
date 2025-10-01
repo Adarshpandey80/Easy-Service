@@ -40,7 +40,7 @@ const ShopOwnerProfile = () => {
           </div>
         </div>
         <div className="profile-actions">
-          <button className="edit-btn">Edit Profile</button>
+          <button className="edit-btns">Edit Profile</button>
           <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙ Settings</button>
         </div>
       </div>

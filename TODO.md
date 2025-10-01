@@ -1,3 +1,5 @@
-- [x] Edit Messages.css to enable horizontal scrolling for message elements in responsive design
-  - [x] Add overflow-x: auto to .chat-messages in @media (max-width: 768px)
-  - [x] Add white-space: nowrap to .message in @media (max-width: 768px)
+# TODO for Worker List Edit and Delete Buttons
+
+- [x] Update handleEdit function in WorkerList.jsx to navigate to the edit form
+- [x] Add confirmation prompt for delete action in handleDelete function
+- [ ] Test the updated functionality

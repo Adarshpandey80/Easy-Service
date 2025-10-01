@@ -57,7 +57,7 @@
   flex-wrap: wrap;
 }
 
-.edit-btn, .settings-btn {
+.edit-btns, .settings-btn {
   padding: 10px 18px;
   border: none;
   border-radius: 10px;
@@ -70,13 +70,13 @@
   gap: 6px;
 }
 
-.edit-btn {
+.edit-btns {
  border: 2px solid black; 
   color: black;
   
 }
 
-.edit-btn:hover {
+.edit-btns:hover {
     background-color: black;
     color: white;
 }
@@ -467,7 +467,7 @@
     font-size: 14px;
   }
   
-  .edit-btn, .settings-btn {
+  .edit-btns, .settings-btn {
     padding: 8px 16px;
     font-size: 13px;
   }

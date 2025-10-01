@@ -21,14 +21,14 @@ const WorkersList = () => {
   ]);
 
   const handleDelete = (id) => {
-    setWorkers(workers.filter((worker) => worker.id !== id));
+    const confirmDelete = window.confirm("Are you sure you want to delete this worker?");
+    if (confirmDelete) {
+      setWorkers(workers.filter((worker) => worker.id !== id));
+    }
   };
 
   const handleEdit = (id) => {
-    alert(`Edit Worker with ID: ${id}`);
-    // navigation(`/workers/edit/${id}`);
-    <Link to={`/workerCard`}></Link>
-    
+    navigation(`/workers/edit/${id}`);
   };
 
   return (
