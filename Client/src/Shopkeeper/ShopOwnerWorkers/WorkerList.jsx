@@ -28,7 +28,8 @@ const WorkersList = () => {
   };
 
   const handleEdit = (id) => {
-    navigation(`/workers/edit/${id}`);
+    // navigation(`/workers/edit/${id}`);
+    navigation(`/workereditform`, { state: { workerId: id } });
   };
 
   return (

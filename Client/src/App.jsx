@@ -13,7 +13,7 @@ import ShopOwnerLoginForm from './Shopkeeper/ShopOwnerLoginForm.jsx';
 import ShopkeeperNavbar from './Shopkeeper/ShopkeeperNavbar.jsx';
 import Addworkerform from './Shopkeeper/ShopOwnerWorkers/Addworkerform.jsx';
 import WorkerList from './Shopkeeper/ShopOwnerWorkers/WorkerList.jsx';
-import WorkerCard from './Shopkeeper/ShopOwnerWorkers/WorkerCard.jsx';
+import WorkerEditForm from './Shopkeeper/ShopOwnerWorkers/WorkerEditForm.jsx';
 import ShopOrder from './Shopkeeper/ShopOrder.jsx';
 import Dashboard from './Shopkeeper/ShopOwnerDashboard.jsx';
 import ShopOwnerServices from './Shopkeeper/ShopOwnerServices.jsx';
@@ -32,7 +32,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/addworkerform" element={<Addworkerform />} />
         <Route path="/workerlist" element={<WorkerList />} />
-        <Route path="/workercard" element={<WorkerCard />} />
+        <Route path="/workereditform" element={<WorkerEditForm />} />
         <Route path="/orders" element={<ShopOrder />} />
         <Route path="/services" element={<ShopOwnerServices />} />
         <Route path="/payment" element={<Payments/>} />

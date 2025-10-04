@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../Style/ShopWorker/ShowWorkerCard.css";
+import "../../Style/ShopWorker/WorkerEditForm.css";
 
 const WorkerEditForm = () => {
   const { id } = useParams();
