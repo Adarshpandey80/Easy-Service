@@ -38,7 +38,7 @@ function App() {
         <Route path="/payment" element={<Payments/>} />
         <Route path="/messages" element={<Messages/>} />
         <Route path="/profile" element={<ShopOwnerProfile/>} />
-        <Route path="/logout" element={<h1>Logout Page</h1>} />
+        {/* <Route path="/logout" element={<h1>Logout Page</h1>} /> */}
       </Routes>
       <Footer />
     </Router>
