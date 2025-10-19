@@ -26,7 +26,7 @@ import ShopOwnerProfile from './Shopkeeper/Profile.jsx';
 function App() {
   return (
     <>
-    <Router>
+    {/* <Router>
       <ShopkeeperNavbar/>
       <Routes>
         <Route path="/" element={<Dashboard />} />
@@ -38,10 +38,9 @@ function App() {
         <Route path="/payment" element={<Payments/>} />
         <Route path="/messages" element={<Messages/>} />
         <Route path="/profile" element={<ShopOwnerProfile/>} />
-        {/* <Route path="/logout" element={<h1>Logout Page</h1>} /> */}
       </Routes>
       <Footer />
-    </Router>
+    </Router> */}
 
 
 
@@ -50,7 +49,7 @@ function App() {
 
 
 
-   {/* <Router>
+   <Router>
     <Nav />
     <Routes>
       <Route path="/" element={<Home />} />
@@ -62,7 +61,7 @@ function App() {
       
     </Routes>
     <Footer />
-   </Router> */}
+   </Router>
       
     </>
   )
