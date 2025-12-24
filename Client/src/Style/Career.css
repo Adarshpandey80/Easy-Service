@@ -21,11 +21,13 @@ background-size: cover;
 .career-hero h1 {
   font-size: 2.8rem;
   margin-bottom: 20px;
+  color: black;
 }
 
 .career-hero p {
   font-size: 1.2rem;
   margin-bottom: 30px;
+  color: #333;
 }
 
 .register-btn {
