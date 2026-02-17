@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 import UserLayout from './UserLayout.jsx';
+import ShopOwnerLayout from './ShopOwnerLayout.jsx';
+
 import Home from './Component/Home.jsx'
 import Career from './Component/Career.jsx'
 import UserSignupForm from './Component/UserSignupForm.jsx';
@@ -59,16 +61,18 @@ function App() {
    </Route> 
    
 
-    <Route path="/owner" element={<Dashboard />}> 
-        <Route path="/owner/addworkerform" element={<Addworkerform />} />
-        <Route path="/owner/workerlist" element={<WorkerList />} />
-        <Route path="/owner/workereditform" element={<WorkerEditForm />} />
-        <Route path="/owner/orders" element={<ShopOrder />} />
-        <Route path="/owner/services" element={<ShopOwnerServices />} />
-        <Route path="/owner/payment" element={<Payments/>} />
-        <Route path="/owner/messages" element={<Messages/>} />
-        <Route path="/owner/profile" element={<ShopOwnerProfile/>} />
-</Route>
+  {/* Shop Owner Layout */}
+    <Route path="/owner" element={<ShopOwnerLayout />}>
+      <Route index element={<Dashboard />} />
+      <Route path="addworkerform" element={<Addworkerform />} />
+      <Route path="workerlist" element={<WorkerList />} />
+      <Route path="workereditform" element={<WorkerEditForm />} />
+      <Route path="orders" element={<ShopOrder />} />
+      <Route path="services" element={<ShopOwnerServices />} />
+      <Route path="payment" element={<Payments />} />
+      <Route path="messages" element={<Messages />} />
+      <Route path="profile" element={<ShopOwnerProfile />} />
+    </Route>
  </Routes>
  </BrowserRouter>
 

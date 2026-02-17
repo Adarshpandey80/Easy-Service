@@ -5,12 +5,12 @@ import '../Style/ShopOwner/ShopOwnerNavbar.css';
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isWorkerOpen, setIsWorkerOpen] = useState(false);
-  const location = useLocation();  // 👈 get current path
+  const location = useLocation();  
 
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">Service-Partner</Link>
+        <Link to="/owner">Service-Partner</Link>
       </div>
 
       <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
@@ -31,10 +31,10 @@ const Nav = () => {
           {isWorkerOpen && (
             <ul className="dropdown-menu">
               <li className={location.pathname === "/workers/add" ? "active" : ""}>
-                <Link to="/addworkerform">Add Worker</Link>
+                <Link to="/owner/addworkerform">Add Worker</Link>
               </li>
               <li className={location.pathname === "/workers/list" ? "active" : ""}>
-                <Link to="/workerlist">Worker List</Link>
+                <Link to="/owner/workerlist">Worker List</Link>
               </li>
               {/* <li className={location.pathname === "/workers/cards" ? "active" : ""}>
                 <Link to="/workers/cards">Worker Cards</Link>
@@ -44,18 +44,18 @@ const Nav = () => {
         </li>
 
         <li className={location.pathname === "/orders" ? "active" : ""}>
-          <Link to="/orders">Orders</Link>
+          <Link to="/owner/orders">Orders</Link>
         </li>
         <li className={location.pathname === "/payment" ? "active" : ""}>
-          <Link to="/payment">Payment</Link>
+          <Link to="/owner/payment">Payment</Link>
         </li>
         <li className={location.pathname === "/messages" ? "active" : ""}>
-          <Link to="/messages">Message</Link>
+          <Link to="/owner/messages">Message</Link>
         </li>
         <li className={location.pathname === "/profile" ? "active" : ""}>
-          <Link to="/profile">Profile</Link>
+          <Link to="/owner/profile">Profile</Link>
         </li>
-        <li><Link to="/logout">Logout</Link></li>
+        <li><Link to="/owner/logout">Logout</Link></li>
       </ul>
     </nav>
   );
