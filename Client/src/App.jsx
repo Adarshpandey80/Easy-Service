@@ -2,7 +2,10 @@ import { useState } from 'react'
 import axios from 'axios';
 import React from 'react'
 import Nav from './Component/Nav.jsx'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+import UserLayout from './UserLayout.jsx';
 import Home from './Component/Home.jsx'
 import Career from './Component/Career.jsx'
 import UserSignupForm from './Component/UserSignupForm.jsx';
@@ -44,12 +47,35 @@ function App() {
 
 
 
+ <BrowserRouter>
+ <Routes>
+   <Route path='/' element={<UserLayout/>}>
+   <Route index element={<Home/>} />
+   <Route path="/career" element={<Career />} />
+      <Route path="/login" element={<UserLoginForm />} />
+      <Route path="/signup" element={<UserSignupForm />} />
+      <Route path="/shopkeeperForm" element={<ShopkeeperForm />} />
+      <Route path="/shopOwnerLogin" element={<ShopOwnerLoginForm />} />
+   </Route> 
+   
+
+    <Route path="/owner" element={<Dashboard />}> 
+        <Route path="/owner/addworkerform" element={<Addworkerform />} />
+        <Route path="/owner/workerlist" element={<WorkerList />} />
+        <Route path="/owner/workereditform" element={<WorkerEditForm />} />
+        <Route path="/owner/orders" element={<ShopOrder />} />
+        <Route path="/owner/services" element={<ShopOwnerServices />} />
+        <Route path="/owner/payment" element={<Payments/>} />
+        <Route path="/owner/messages" element={<Messages/>} />
+        <Route path="/owner/profile" element={<ShopOwnerProfile/>} />
+</Route>
+ </Routes>
+ </BrowserRouter>
+
+ 
 
 
-
-
-
-   <Router>
+   {/* <Router>
     <Nav />
     <Routes>
       <Route path="/" element={<Home />} />
@@ -61,7 +87,7 @@ function App() {
       
     </Routes>
     <Footer />
-   </Router>
+   </Router> */}
       
     </>
   )
