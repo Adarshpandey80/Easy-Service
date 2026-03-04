@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UserLayout from './UserLayout.jsx';
 import ShopOwnerLayout from './ShopOwnerLayout.jsx';
+import AdminLayout from './AdminLayout.jsx';
 
 import Home from './Component/Home.jsx'
 import Career from './Component/Career.jsx'
@@ -26,6 +27,7 @@ import Payments from './Shopkeeper/Payments.jsx';
 import Messages from './Shopkeeper/Messages.jsx';
 import ShopOwnerProfile from './Shopkeeper/Profile.jsx';
 
+import AdminDashboard from './SuperAdmin/AdminDashboard.jsx';
 
 
 function App() {
@@ -72,6 +74,12 @@ function App() {
       <Route path="payment" element={<Payments />} />
       <Route path="messages" element={<Messages />} />
       <Route path="profile" element={<ShopOwnerProfile />} />
+    </Route>
+
+
+    <Route path='/superadmin' element={<AdminLayout/>}>
+      <Route index element={<AdminDashboard />} />
+      
     </Route>
  </Routes>
  </BrowserRouter>
