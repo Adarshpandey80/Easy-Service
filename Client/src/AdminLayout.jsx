@@ -7,8 +7,6 @@ function AdminLayout() {
 <div>AdminLayout</div>
 <Outlet/>
     </>
-    
-    
   )
 }
 
