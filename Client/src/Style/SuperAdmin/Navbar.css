@@ -1,0 +1,94 @@
+.admin-navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#1e293b;
+  padding:12px 30px;
+  color:white;
+}
+
+/* Logo */
+
+.admin-logo a{
+  font-size:18px;
+  font-weight:600;
+  color:white;
+  text-decoration:none;
+}
+
+/* Nav Links */
+
+.admin-links{
+  display:flex;
+  gap:25px;
+  list-style:none;
+}
+
+.admin-links a{
+  text-decoration:none;
+  color:#cbd5e1;
+  font-size:14px;
+  transition:0.3s;
+}
+
+.admin-links a:hover{
+  color:white;
+}
+
+/* Right section */
+
+.admin-right{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+/* Notification */
+
+.admin-notification{
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* Profile */
+
+.admin-profile{
+  position:relative;
+  cursor:pointer;
+  font-size:14px;
+}
+
+/* Dropdown */
+
+.profile-menu{
+  position:absolute;
+  top:35px;
+  right:0;
+  background:white;
+  color:black;
+  display:flex;
+  flex-direction:column;
+  width:150px;
+  border-radius:6px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.profile-menu a{
+  padding:10px;
+  text-decoration:none;
+  color:#333;
+}
+
+.profile-menu a:hover{
+  background:#f1f5f9;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+  .admin-links{
+    display:none;
+  }
+
+}

@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 function AdminLayout() {
   return (
     <>
-<SuperAdminNav/>
-
+ <SuperAdminNav/> 
+ 
 <Outlet/>
     </>
   )
