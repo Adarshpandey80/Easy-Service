@@ -1,0 +1,110 @@
+.admin-users{
+  padding:30px;
+  background:#f8fafc;
+  min-height:100vh;
+}
+
+.page-title{
+  font-size:24px;
+  margin-bottom:20px;
+}
+
+
+
+.users-header{
+  margin-bottom:20px;
+}
+
+.users-header input{
+  padding:10px;
+  width:250px;
+  border-radius:6px;
+  border:1px solid #ddd;
+}
+
+
+
+.users-table-container{
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+.users-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.users-table th{
+  background:#f1f5f9;
+  padding:12px;
+  text-align:left;
+}
+
+.users-table td{
+  padding:12px;
+  border-top:1px solid #eee;
+}
+
+/* Status */
+
+.status{
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.status.active{
+  background:#dcfce7;
+  color:#16a34a;
+}
+
+.status.blocked{
+  background:#fee2e2;
+  color:#dc2626;
+}
+
+
+
+.view-btn{
+  background:#3b82f6;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  margin-right:5px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.block-btn{
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.activate-btn{
+  background:#22c55e;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+
+
+@media(max-width:768px){
+
+  .users-table{
+    font-size:14px;
+  }
+
+  .users-header input{
+    width:100%;
+  }
+
+}

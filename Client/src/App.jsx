@@ -28,6 +28,7 @@ import Messages from './Shopkeeper/Messages.jsx';
 import ShopOwnerProfile from './Shopkeeper/Profile.jsx';
 
 import AdminDashboard from './SuperAdmin/AdminDashboard.jsx';
+import AdminUsers from './SuperAdmin/AdminUsers.jsx';
 
 
 function App() {
@@ -79,7 +80,7 @@ function App() {
 
     <Route path='/superadmin' element={<AdminLayout/>}>
       <Route index element={<AdminDashboard />} />
-      
+      <Route path="users" element={<AdminUsers />} />
     </Route>
  </Routes>
  </BrowserRouter>

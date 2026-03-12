@@ -17,7 +17,7 @@ function SuperAdminNav() {
       {/* Nav Links */}
       <ul className="admin-links">
         <li><Link to="/superadmin">Dashboard</Link></li>
-        <li><Link to="/admin/users">Users</Link></li>
+        <li><Link to="/superadmin/users">Users</Link></li>
         <li><Link to="/admin/shops">Shop Owners</Link></li>
         <li><Link to="/admin/verifications">Verifications</Link></li>
         <li><Link to="/admin/services">Services</Link></li>
@@ -26,15 +26,15 @@ function SuperAdminNav() {
         <li><Link to="/admin/reports">Reports</Link></li>
       </ul>
 
-      {/* Right Section */}
+
       <div className="admin-right">
 
-        {/* Notifications */}
+   
         <div className="admin-notification">
           🔔
         </div>
 
-        {/* Profile Dropdown */}
+     
         <div 
           className="admin-profile"
           onClick={() => setProfileOpen(!profileOpen)}
