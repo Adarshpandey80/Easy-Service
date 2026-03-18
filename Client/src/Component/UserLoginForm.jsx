@@ -1,10 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import '../Style/UserFormStyle/Login.css'
-
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../Style/UserFormStyle/Login.css'
 
 const UserLoginForm = () => {
@@ -13,17 +10,18 @@ const UserLoginForm = () => {
         password: ''
     })
     const handleChange =(e)=>{
-        e.preventDefault();
        const {name, value} = e.target;
        setFormData({...formData, [name]: value})
-    }
-    const formsubmit = async (e)=>{
-      e.preventDefault();
-      console.log(formData);
-      const api =  process.env.API_URL;
-      const response  = await axios.post(`${api}/login`, formData);
-      console.log(response.data);
-    }
+   }
+   const formsubmit = async (e) => {
+  e.preventDefault();
+  console.log(formData);
+  const api = import.meta.env.VITE_API_URL;
+  console.log("API URL:", api);
+  const response = await axios.post("http://localhost:8000/user/login", formData);
+  console.log(response.data.message);
+};
+
 
   return (
    <>
