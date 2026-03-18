@@ -18,7 +18,7 @@ const UserLoginForm = () => {
   console.log(formData);
   const api = import.meta.env.VITE_API_URL;
   console.log("API URL:", api);
-  const response = await axios.post("http://localhost:8000/user/login", formData);
+  const response = await axios.post(`${api}/user/login`, formData);
   console.log(response.data.message);
 };
 
