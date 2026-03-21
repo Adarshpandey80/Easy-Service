@@ -44,6 +44,30 @@
   transition: border 0.3s;
 }
 
+.password-field {
+  margin-bottom: 20px;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}
+
 .signup-form input:focus {
   border-color: #007bff;
 }

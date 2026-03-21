@@ -1,64 +1,44 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Style/UserFormStyle/Signup.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 const UserSignupForm = () => {
+  const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     phone: "",
     password: "",
+    role: "user"
   });
-   const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
- const validateForm = () => {
-    let newErrors = {};
 
-    if (!formData.username.trim()) {
-      newErrors.username = "Username is required";
+
+  const signupSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const api = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${api}/user/signup`, formData);
+      console.log(response.data.message);
+      toast.success(response.data.message, { position: 'top-center' });
+      navigate('/');
+
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast.error("An error occurred during signup.", { position: 'top-center' });
     }
+  }
 
-    if (!formData.email.match(/^[a-zA-Z0-9._%+-]+@gmail\.com$/)) {
-      newErrors.email = "Email must be a valid @gmail.com address";
-    }
-
-    if (!formData.phone.match(/^\d{10}$/)) {
-      newErrors.phone = "Phone must be exactly 10 digits";
-    }
-
-    // ✅ Password: at least 6 chars, 1 uppercase, 1 lowercase, 1 digit
-    if (
-      !formData.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/)
-    ) {
-      newErrors.password =
-        " must include A-Z, a-z, 0-9 & symbol (@$!%*?&)";
-    }
-
-    return newErrors;
-  };
-
-   const signupSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
-      console.log("Form Data Submitted:", formData);
-      // 👉 Call API here
-    }
-
-
-
-   
-
-  };
 
   return (
     <div className="signup-container">
@@ -74,7 +54,7 @@ const UserSignupForm = () => {
           onChange={handleChange}
           required
         />
-         {errors.username && <p className="error">{errors.username}</p>}
+
 
         <label>Email (Gmail only)</label>
         <input
@@ -83,10 +63,11 @@ const UserSignupForm = () => {
           placeholder="Enter Gmail address"
           value={formData.email}
           onChange={handleChange}
-          pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+          pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+          title="Please enter a valid Gmail address"
           required
         />
-          {errors.email && <p className="error">{errors.email}</p>}
+
 
         <label>Phone</label>
         <input
@@ -96,21 +77,36 @@ const UserSignupForm = () => {
           value={formData.phone}
           onChange={handleChange}
           pattern="[0-9]{10}"
-          required
-        />
-          {errors.phone && <p className="error">{errors.phone}</p>}
+          title="Phone number must be 10 digits"
 
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={formData.password}
-          onChange={handleChange}
-          minLength="6"
           required
         />
-          {errors.password && <p className="error">{errors.password}</p>}
+
+
+        <div className="password-field">
+          <label>Password</label>
+
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Enter password"
+              value={formData.password}
+              onChange={handleChange}
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$"
+              title=" Must be 6+ characters, include uppercase, lowercase, and a number."
+              required
+            />
+
+            <span
+              className="toggle-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
+        </div>
+
 
         <input type="submit" value="Sign Up" className="submit-btn" />
         <p className="login-link">

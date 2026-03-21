@@ -7,6 +7,13 @@ import '../Style/Navbar.css'
 
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const checkToken = localStorage.getItem("token");
+  
+    const logout = () => {
+      localStorage.removeItem("token");
+      window.location.href = "/"; 
+    }
+
   return (
    <>
    <nav className="navbar">
@@ -24,7 +31,12 @@ const Nav = () => {
       <ul className={`nav-links ${isOpen ? "active" : ""}`}>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/career">Career</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        {checkToken ? (
+          <li><Link to="/login" onClick={logout}>Logout</Link></li>
+        ) : (
+           <li><Link to="/login">Login</Link></li>
+        )}
+        
         
       </ul>
     </nav>
