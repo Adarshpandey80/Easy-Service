@@ -45,6 +45,42 @@
 }
 
 .password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-input {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.password-input input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+/* .password-field {
   margin-bottom: 20px;
 }
 
@@ -66,7 +102,7 @@
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 18px;
-}
+} */
 
 .login-form input:focus {
   border-color: #007bff;

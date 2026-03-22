@@ -13,6 +13,7 @@ import Home from './Component/Home.jsx'
 import Career from './Component/Career.jsx'
 import UserSignupForm from './Component/UserSignupForm.jsx';
 import UserLoginForm from './Component/UserLoginForm.jsx';
+import UserProfileDash from './Component/UserProfileDash.jsx';
 import Footer from './Component/Footer.jsx'
 import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
 import ShopOwnerLoginForm from './Shopkeeper/ShopOwnerLoginForm.jsx';
@@ -56,11 +57,12 @@ function App() {
  <Routes>
    <Route path='/' element={<UserLayout/>}>
    <Route index element={<Home/>} />
-   <Route path="/career" element={<Career />} />
-      <Route path="/login" element={<UserLoginForm />} />
-      <Route path="/signup" element={<UserSignupForm />} />
-      <Route path="/shopkeeperForm" element={<ShopkeeperForm />} />
-      <Route path="/shopOwnerLogin" element={<ShopOwnerLoginForm />} />
+   <Route path="career" element={<Career />} />
+      <Route path="login" element={<UserLoginForm />} />
+      <Route path="signup" element={<UserSignupForm />} />
+      <Route path="shopkeeperForm" element={<ShopkeeperForm />} />
+      <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
+      <Route path="userprofile" element={<UserProfileDash />} />
    </Route> 
    
 

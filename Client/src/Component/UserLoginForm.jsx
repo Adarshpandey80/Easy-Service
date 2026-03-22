@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import '../Style/UserFormStyle/Login.css'
 import { toast } from 'react-toastify'
 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const UserLoginForm = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const UserLoginForm = () => {
                 className="toggle-icon"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
           </div>

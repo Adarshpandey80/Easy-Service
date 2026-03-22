@@ -1,5 +1,22 @@
 const mongoose = require("mongoose");
 
+const serviceSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    required: true,
+    enum: ["Electronics Services", "Carpentry", "Cleaning Services", "Painting"]
+  },
+  subcategory: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  }
+}, { _id: false });
+
 const shopOwnerSchema = new mongoose.Schema(
   {
     ownerName: {
@@ -35,30 +52,12 @@ const shopOwnerSchema = new mongoose.Schema(
       trim: true,
     },
     services: {
-      type: [String],
+      type: [serviceSchema],
       required: true,
       validate: {
         validator: (v) => v.length >= 1,
         message: "At least one service is required",
       },
-      enum: [
-        "AC Repair",
-        "Cooler Repair",
-        "Fridge Service",
-        "Washing Machine Repair",
-        "Electrical Wiring",
-        "Inverter Service",
-        "Geyser Repair",
-        "Microwave Fix",
-        "Fan Repair",
-        "TV Repair",
-        "Mixer/Grinder Fix",
-        "Wiring Work",
-        "AC Gas Refill",
-        "Cooler Motor Repair",
-        "Inverter Repair",
-        "UPS Battery Change",
-      ],
     },
     address: {
       type: String,

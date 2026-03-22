@@ -97,7 +97,260 @@
   color: white;
 }
 
+/* ✅ Service Selection Styles */
+.service-selection {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border: 1px solid #e0e0e0;
+}
 
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.registration-form select,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.registration-form select:focus,
+.form-group select:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 4px rgba(0, 119, 255, 0.3);
+  outline: none;
+}
+
+.registration-form input[type="number"],
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.registration-form input[type="number"]:focus,
+.form-group input[type="number"]:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 4px rgba(0, 119, 255, 0.3);
+  outline: none;
+}
+
+.add-service-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.add-service-btn:hover {
+  background-color: black;
+  color : white
+}
+
+/* ✅ Subcategory Checkboxes */
+.subcategory-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.subcategory-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subcategory-checkbox-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #0077ff;
+}
+
+.subcategory-checkbox-item label {
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.subcategory-checkbox-item input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+/* ✅ Pricing Input Rows */
+.pricing-group {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.price-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.price-input-row:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.price-input-row label {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.price-input-row input[type="number"] {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
+}
+
+/* ✅ Added Services List */
+.added-services {
+  background: #f0f7ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border: 2px solid #0077ff;
+}
+
+.added-services h4 {
+  color: #0077ff;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border-left: 4px solid #0077ff;
+}
+
+.service-details {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex: 1;
+}
+
+.service-category {
+  font-weight: 600;
+  color: #0077ff;
+  font-size: 0.9rem;
+  background: #e0f0ff;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.service-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.service-price {
+  color: #27ae60;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.remove-service-btn {
+  padding: 6px 12px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.remove-service-btn:hover {
+  background-color: #c0392b;
+}
+
+.registration-form h3 {
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #0077ff;
+  padding-bottom: 10px;
+}
+
+
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}
 
 /* ============= Responsive ============= */
 
@@ -166,6 +419,62 @@
     font-size: 0.9rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+
+  .service-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .service-details {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .remove-service-btn {
+    width: 100%;
+  }
+
+  .add-service-btn {
+    width: 100%;
+  }
+
+  .registration-form select,
+  .form-group select {
+    font-size: 0.95rem;
+  }
+
+  .service-selection {
+    padding: 15px;
+  }
+
+  .added-services {
+    padding: 15px;
+  }
+
+  .subcategory-checkboxes {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .price-input-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .price-input-row label {
+    font-size: 0.9rem;
+  }
+
+  .price-input-row input[type="number"] {
+    width: 100%;
+  }
+
+  .pricing-group {
+    padding: 12px;
   }
 
   

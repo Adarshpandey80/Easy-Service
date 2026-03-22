@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 
 const userRoutes = require("./src/routes/userRoutes");
+const shopOwnerRoutes = require("./src/routes/shopOwnerRoutes");
 
 
 require("dotenv").config();
@@ -35,11 +36,7 @@ connectDB().then(() => {
 
 // Routes
 app.use("/user", userRoutes);
-
-// Test Route
-app.get("/", (req, res) => {
-  res.send("API Running 🚀");
-});
+app.use("/shopowner" , shopOwnerRoutes);
 
 // Server Start
 const PORT = process.env.PORT || 8000;

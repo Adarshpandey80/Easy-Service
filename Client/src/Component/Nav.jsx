@@ -32,11 +32,14 @@ const Nav = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/career">Career</Link></li>
         {checkToken ? (
-          <li><Link to="/login" onClick={logout}>Logout</Link></li>
+          <>
+            <li><Link to="/userprofile">Profile</Link></li>
+            <li><Link to="/login" onClick={logout}>Logout</Link></li> 
+          </>
         ) : (
            <li><Link to="/login">Login</Link></li>
         )}
-        
+         
         
       </ul>
     </nav>
