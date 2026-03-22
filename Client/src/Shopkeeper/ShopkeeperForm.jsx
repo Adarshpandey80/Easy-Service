@@ -16,12 +16,14 @@ const ShopkeeperForm = () => {
     email: '',
     phone: '',
     shopName: '',
+    shopImage: [],
     services: [],
     address: '',
     username: '',
     password: '',
     confirmPassword: ''
   });
+  const [formImage, setFormImage] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
@@ -78,6 +80,10 @@ const ShopkeeperForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+  const handleImage = (e) => {
+    setFormImage(e.target.files);
+
   };
 
   const handleCategoryChange = (e) => {
@@ -168,6 +174,15 @@ const ShopkeeperForm = () => {
     if (!formData.username) tempErrors.username = "Username is required";
     if (!formData.password) tempErrors.password = "Password is required";
     if (formData.password !== formData.confirmPassword) tempErrors.confirmPassword = "Passwords do not match";
+    if(formImage.length > 0) {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      for (let i = 0; i < formData.shopImage.length; i++) {
+        if (!allowedTypes.includes(formData.shopImage[i].type)) {
+          tempErrors.shopImage = "Only JPG, PNG, and GIF formats are allowed";
+          break;
+        }
+      }
+    }
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -177,27 +192,42 @@ const ShopkeeperForm = () => {
     if (validate()) {
       const api = import.meta.env.VITE_API_URL;
 
-      // Prepare clean data for submission (remove confirmPassword and id from services)
-      const submitData = {
-        ownerName: formData.ownerName,
-        email: formData.email,
-        phone: formData.phone,
-        shopName: formData.shopName,
-        address: formData.address,
-        username: formData.username,
-        password: formData.password,
-        services: formData.services.map(({ category, subcategory, price }) => ({
+      // Create FormData for file upload
+      const formDataToSend = new FormData();
+      
+      // Append form fields
+      formDataToSend.append('ownerName', formData.ownerName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('shopName', formData.shopName);
+      formDataToSend.append('address', formData.address);
+      formDataToSend.append('username', formData.username);
+      formDataToSend.append('password', formData.password);
+      
+      // Append services as JSON string
+      formDataToSend.append('services', JSON.stringify(
+        formData.services.map(({ category, subcategory, price }) => ({
           category,
           subcategory,
           price: Number(price)
         }))
-      };
+      ));
+      
+      // Append image files
+      if (formImage && formImage.length > 0) {
+        for (let i = 0; i < formImage.length; i++) {
+          formDataToSend.append('shopImage', formImage[i]);
+        }
+      }
 
       try {
-        const response = await axios.post(`${api}/shopowner/register`, submitData);
+        const response = await axios.post(`${api}/shopowner/register`, formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
         console.log(response.data);
         toast.success("Shop registered successfully! Please login to continue.");
-        // Navigate to login page after successful registration
         navigate('/shopOwnerLogin');
       } catch (error) {
         console.error("Error registering shop:", error);
@@ -210,6 +240,7 @@ const ShopkeeperForm = () => {
         email: '',
         phone: '',
         shopName: '',
+        shopImage: [],
         services: [],
         address: '',
         username: '',
@@ -240,6 +271,9 @@ const ShopkeeperForm = () => {
           <h3>Shop Information</h3>
           <input type="text" name="shopName" placeholder="Shop Name" value={formData.shopName} onChange={handleChange} />
           {errors.shopName && <p className="error">{errors.shopName}</p>}
+        
+          <input type='file' name="shopImage" placeholder="Shop Image" onChange={handleImage} multiple />
+          {errors.shopImage && <p className="error">{errors.shopImage}</p>}
 
           <h3>Services & Pricing</h3>
 

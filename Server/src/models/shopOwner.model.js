@@ -51,6 +51,11 @@ const shopOwnerSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    shopImage: [
+      {
+        type: String
+      }
+    ],
     services: {
       type: [serviceSchema],
       required: true,
@@ -89,10 +94,6 @@ const shopOwnerSchema = new mongoose.Schema(
     earnings: {
       type: Number,
       default: 0,
-    },
-    shopImage: {
-      type: String,
-      default: "",
     },
     lastLogin: {
       type: Date,

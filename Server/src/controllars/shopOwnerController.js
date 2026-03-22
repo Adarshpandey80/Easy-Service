@@ -1,17 +1,39 @@
 const shopOwnerModel = require("../models/shopOwner.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const cloudinary = require("../../cloudinary");
 
 const shopOwnerRegister = async (req, res) => {
+  
   try {
-    const { ownerName, email, phone, shopName, address, username, password, services } = req.body;
+    let { ownerName, email, phone, shopName, address, username, password, services } = req.body;
+    const files = req.files;
+    
+    // Parse services from JSON string if it's a string
+    let parsedServices = [];
+    if (services) {
+      try {
+        parsedServices = typeof services === 'string' ? JSON.parse(services) : services;
+      } catch (e) {
+        return res.status(400).json({ message: "Invalid services format" });
+      }
+    }
+    
+    // Upload images to Cloudinary and get URLs
+    const imageUrls = [];
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const result = await cloudinary.uploader.upload(file.path);
+        imageUrls.push(result.secure_url);
+      }
+    }
 
     // Validation
-    if (!ownerName || !email || !phone || !shopName || !address || !username || !password || !services) {
+    if (!ownerName || !email || !phone || !shopName || !address || !username || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    if (!Array.isArray(services) || services.length === 0) {
+    if (!Array.isArray(parsedServices) || parsedServices.length === 0) {
       return res.status(400).json({ message: "At least one service must be provided" });
     }
 
@@ -37,7 +59,7 @@ const shopOwnerRegister = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Filter services to remove the id field (client-side only)
-    const cleanedServices = services.map(({ category, subcategory, price }) => ({
+    const cleanedServices = parsedServices.map(({ category, subcategory, price }) => ({
       category,
       subcategory,
       price: Number(price)
@@ -49,6 +71,7 @@ const shopOwnerRegister = async (req, res) => {
       email,
       phone,
       shopName,
+      shopImage: imageUrls, 
       address,
       username,
       password: hashedPassword,
