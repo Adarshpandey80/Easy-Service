@@ -15,7 +15,7 @@ const Career = () => {
           Get more orders, manage services efficiently, and reach new 
           clients effortlessly.
         </p>
-        <Link to="/shopkeeperForm" className="register-btn">
+        <Link to="/shopkeeperForm" className="register-btn" target="myTab">
           Register Your Shop
         </Link>
       </section>
