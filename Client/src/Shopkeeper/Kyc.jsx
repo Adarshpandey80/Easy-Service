@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUpload, FaCheck, FaTimes, FaFilePdf, FaFileImage } from 'react-icons/fa';
 import '../Style/ShopOwner/Kyc.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Kyc() {
   const [documents, setDocuments] = useState({
@@ -15,6 +17,43 @@ function Kyc() {
 
   const [uploadProgress, setUploadProgress] = useState({});
   const [submittedDocs, setSubmittedDocs] = useState(new Set());
+  const [kycStatus, setKycStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [statusBadge, setStatusBadge] = useState('pending');
+
+  useEffect(() => {
+    // Fetch KYC status from backend
+    const fetchKYCStatus = async () => {
+      try {
+         const api = process.env.VITE_API_URL ;
+        const response = await axios.get(`${api}/kyc/status`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          setKycStatus(data.data);
+          setStatusBadge(data.data.status);
+          // Load existing documents
+          Object.keys(data.data).forEach(key => {
+            if (data.data[key] && typeof data.data[key] === 'object' && data.data[key].fileName) {
+              setSubmittedDocs(prev => new Set([...prev, key]));
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching KYC status:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchKYCStatus();
+  }, []);
 
   const documentRequirements = {
     businessRegistration: {
@@ -121,7 +160,7 @@ function Kyc() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const allDocumentsUploaded = Object.keys(documents).every(doc => documents[doc] !== null);
     
@@ -130,9 +169,27 @@ function Kyc() {
       return;
     }
 
-    alert('KYC documents submitted successfully! We will verify them within 24-48 hours.');
-    // Here you would typically send the documents to your backend
-    console.log('Documents submitted:', documents);
+    try {
+         const api = process.env.VITE_API_URL ;
+      const response = await axios.post(`${api}/kyc/submit`, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      const data = response.data;
+      if (data.success) {
+        alert('KYC documents submitted successfully! We will verify them within 24-48 hours.');
+        setKycStatus(data.data);
+        setStatusBadge(data.data.status);
+      } else {
+        alert(data.message || 'Error submitting KYC');
+      }
+    } catch (error) {
+      console.error('Error submitting KYC:', error);
+      alert('Error submitting KYC documents');
+    }
   };
 
   const getFileIcon = (file) => {
@@ -148,8 +205,24 @@ function Kyc() {
   return (
     <div className="kyc-container">
       <div className="kyc-header">
-        <h1>KYC Verification</h1>
-        <p>Complete your Know Your Customer (KYC) verification to unlock all features</p>
+        <div className="header-top">
+          <div>
+            <h1>KYC Verification</h1>
+            <p>Complete your Know Your Customer (KYC) verification to unlock all features</p>
+          </div>
+          {kycStatus && (
+            <div className={`status-badge status-${statusBadge}`}>
+              {statusBadge === 'approved' && '✓ Verified'}
+              {statusBadge === 'pending' && '⏳ Pending'}
+              {statusBadge === 'rejected' && '✗ Rejected'}
+            </div>
+          )}
+        </div>
+        {kycStatus && kycStatus.isVerified && (
+          <div className="verification-info">
+            ✓ Your KYC is verified! You have unrestricted access to all features.
+          </div>
+        )}
         <div className="progress-bar">
           <div className="progress-fill" style={{ width: `${(uploadedCount / totalDocuments) * 100}%` }}></div>
         </div>
@@ -160,6 +233,14 @@ function Kyc() {
         <h3>📋 Required Documents</h3>
         <p>All documents must be clear, valid, and readable. Ensure the document covers the entire frame.</p>
       </div>
+
+      {kycStatus && kycStatus.status === 'rejected' && (
+        <div className="rejection-banner">
+          <h3>⚠️ Submission Rejected</h3>
+          <p><strong>Reason:</strong> {kycStatus.rejectionReason}</p>
+          <p>Please resubmit your documents with the corrections.</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="kyc-form">
         <div className="document-grid">
