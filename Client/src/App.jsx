@@ -27,6 +27,7 @@ import ShopOwnerServices from './Shopkeeper/ShopOwnerServices.jsx';
 import Payments from './Shopkeeper/Payments.jsx';
 import Messages from './Shopkeeper/Messages.jsx';
 import ShopOwnerProfile from './Shopkeeper/Profile.jsx';
+import Kyc from './Shopkeeper/Kyc.jsx';
 
 import AdminDashboard from './SuperAdmin/AdminDashboard.jsx';
 import AdminUsers from './SuperAdmin/AdminUsers.jsx';
@@ -77,6 +78,7 @@ function App() {
       <Route path="payment" element={<Payments />} />
       <Route path="messages" element={<Messages />} />
       <Route path="profile" element={<ShopOwnerProfile />} />
+      <Route path="kyc" element={<Kyc />} />
     </Route>
 
 

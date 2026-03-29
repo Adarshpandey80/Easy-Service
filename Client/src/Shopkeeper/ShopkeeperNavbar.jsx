@@ -55,6 +55,9 @@ const Nav = () => {
         <li className={location.pathname === "/profile" ? "active" : ""}>
           <Link to="/owner/profile">Profile</Link>
         </li>
+        <li className={location.pathname === "/kyc" ? "active" : ""}>
+          <Link to="/owner/kyc">KYC</Link>
+        </li>
         <li><Link to="/owner/logout">Logout</Link></li>
       </ul>
     </nav>

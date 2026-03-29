@@ -13,11 +13,12 @@ const WorkerEditForm = () => {
     status: "Active",
   });
 
-  // ✅ Fetch worker details from backend
+
   useEffect(() => {
     const fetchWorker = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/workers/${id}`);
+        const api = process.env.VITE_API_URL ;
+        const res = await axios.get(`${api}/api/workers/${id}`);
         setFormData(res.data); // prefill with worker data
       } catch (err) {
         console.error("Error fetching worker", err);
@@ -34,7 +35,8 @@ const WorkerEditForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/workers/${id}`, formData);
+      const api = process.env.VITE_API_URL ;
+      await axios.put(`${api}/api/workers/${id}`, formData);
       alert("Worker updated successfully!");
       navigate(`/workers/${id}`);
     } catch (err) {

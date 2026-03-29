@@ -12,7 +12,7 @@ const ShopOwnerProfile = () => {
     phone: "+91 9876543210",
     address: "Lucknow, Uttar Pradesh, India",
     joined: "2023-06-15",
-    shopName: "Adarsh Services",
+    shopName: "Adarsh Services",  
     businessId: "GSTIN-2345XYZ",
     services: ["AC Repair", "Fridge Repair", "Electrician"],
     lastLogin: "2025-09-28 09:32 AM",
