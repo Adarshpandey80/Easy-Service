@@ -1,13 +1,13 @@
 const express = require("express");
-const fetchShopsRoutes = express.Router();
+const Routes = express.Router();
 const fetchShopsController = require("../controllars/fetchShopsController");
 
-fetchShopsRoutes.get("/fetchShops", fetchShopsController.fetchShops);
+Routes.get("/fetchShops", fetchShopsController.fetchShops);
+Routes.get("/shopowner/:id", fetchShopsController.fetchShopById);
 
 
 
 
 
 
-
-module.exports = fetchShopsRoutes;
+module.exports = Routes;

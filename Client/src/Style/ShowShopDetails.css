@@ -1,0 +1,68 @@
+.shop-details {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.shop-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.shop-header img {
+  width: 250px;
+  border-radius: 10px;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.review {
+  background: #f9fafb;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.book-btn {
+  margin-top: 30px;
+  width: 100%;
+  padding: 12px;
+  
+  color: black;
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background: black;
+  color: white;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .shop-header {
+    flex-direction: column;
+  }
+
+  .shop-header img {
+    width: 100%;
+  }
+}
