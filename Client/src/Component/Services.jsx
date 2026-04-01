@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
- import "../Style/Services.css"
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect } from 'react'
+import "../Style/Services.css"
 
 
 
 const Services = () => {
+  const [shopsData, setShopsData] = useState([]);
 
   const shopImages = [
     "/Images/shopImage/shop1.webp",
@@ -11,7 +15,7 @@ const Services = () => {
     "/Images/shopImage/shop3.webp",
     "/Images/shopImage/shop4.webp",
     "/Images/shopImage/shop5.avif",
-    
+
   ];
 
   const shops = [
@@ -87,6 +91,23 @@ const Services = () => {
     },
   ];
 
+  const fetchShopsData = async () => {
+    try {
+      const api = import.meta.env.VITE_API_URL;
+      const response = await axios.get(`${api}/shops/fetchShops`);
+      setShopsData(response.data);
+      console.log("Fetched shops data:", response.data);
+    } catch (error) {
+      console.error("Error fetching shops data:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchShopsData();
+  }, []);
+
+
   return (
 
     <>
@@ -102,13 +123,35 @@ const Services = () => {
           <button className="btn search-btn">Search</button>
         </div>
         <div className="shops-grid">
-          {shops.map((shop, index) => (
-            <div className="shop-card" key={index}>
-              <img src={shop.img} alt={shop.name} className="shop-img" />
-              <h3>{shop.name}</h3>
-              <p><strong>Services:</strong> {shop.services.join(", ")}</p>
-              <p><strong>Location:</strong> {shop.location}</p>
-              <p><strong>Rating:</strong> ⭐ {shop.rating}</p>
+          {shopsData.map((shop) => (
+            <div className="shop-card" key={shop._id}>
+
+              {/* Image */}
+              <img
+                src={shop.shopImage?.[0] || "https://via.placeholder.com/300"}
+                alt={shop.shopName}
+                className="shop-img"
+              />
+
+              {/* Name */}
+              <h3>{shop.shopName}</h3>
+
+              {/* Services */}
+              <p>
+                <strong>Services:</strong>{" "}
+                {shop.services.map((s) => s.subcategory).join(", ")}
+              </p>
+
+              {/* Location */}
+              <p>
+                <strong>Location:</strong> {shop.address}
+              </p>
+
+              {/* Rating */}
+              <p>
+                <strong>Rating:</strong> ⭐ {shop.rating || 0}
+              </p>
+
               <button className="btn">Book Now</button>
             </div>
           ))}

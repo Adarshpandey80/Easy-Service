@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./src/routes/userRoutes");
 const shopOwnerRoutes = require("./src/routes/shopOwnerRoutes");
 const kycRoutes = require("./src/routes/kycRoutes");
+const fetchShopsRoutes = require("./src/routes/fetchShopsRoute");
 
 
 // Middleware
@@ -42,6 +43,7 @@ connectDB().then(() => {
 app.use("/user", userRoutes);
 app.use("/shopowner" , shopOwnerRoutes);
 app.use("/kyc", kycRoutes);
+app.use("/shops" , fetchShopsRoutes);
 
 // Server Start
 const PORT = process.env.PORT || 8000;
