@@ -2,38 +2,51 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import "../Style/chat.css";
 
-const socket = io(import.meta.env.VITE_API_URL);
-
 function Chat() {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
-
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
+        const newSocket = io(import.meta.env.VITE_API_URL);
+        setSocket(newSocket);
 
-        socket.on("receive_message", (data) => {
+        newSocket.on("receive_message", (data) => {
+            // Add received message from other users
             setChat((prev) => [...prev, data]);
         });
 
-        return () => socket.off("receive_message");
+        return () => {
+            newSocket.off("receive_message");
+            newSocket.disconnect();
+        };
     }, []);
 
     const sendMessage = () => {
-        if (message.trim()) {
-            socket.emit("send_message", message);
-            setChat((prev) => [...prev, { message, sender: "user", time: new Date().toLocaleTimeString() }]);
-            setMessage("");
-        }
+        if (!message.trim() || !socket) return;
+
+        const msgData = {
+            message,
+            sender: "user",
+            time: new Date().toLocaleTimeString()
+        };
+
+        // Add message locally (sent)
+        setChat((prev) => [...prev, msgData]);
+        
+        // Send to server
+        socket.emit("send_message", msgData);
+        setMessage("");
     };
 
     return (
         <div className="chat-wrapper">
 
-            {/* Header */}
+
             <div className="chat-header">
                 <div className="chat-user">
                     <img
-                       src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png"
+                        src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png"
                         alt="user"
                         className="chat-avatar"
                     />
@@ -44,13 +57,12 @@ function Chat() {
                 </div>
             </div>
 
-            {/* Chat Messages */}
+
             <div className="chat-box">
                 {chat.map((msg, index) => (
                     <div
                         key={index}
-                        className={`chat-bubble ${msg.sender === "user" ? "user" : "owner"
-                            }`}
+                        className={`chat-bubble ${msg.sender === "user" ? "user" : "owner"}`}
                     >
                         <p>{msg.message}</p>
                         <span>{msg.time}</span>
