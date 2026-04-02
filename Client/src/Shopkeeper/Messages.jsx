@@ -1,48 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
 import "../Style/ShopOwner/Messages.css";
 
-const initialThreads = [
-  {
-    id: 1,
-    sender: "John Doe",
-    messages: [
-      { type: "received", text: "Hi, I need help with my service...", time: "2:30 PM" },
-      { type: "sent", text: "Hello John, how can I assist you?", time: "2:35 PM" },
-    ],
-  },
-  {
-    id: 2,
-    sender: "System",
-    messages: [
-      { type: "received", text: "Payment received for Order #1234", time: "1d ago" },
-    ],
-  },
-];
-
 const Messages = () => {
-  const [threads, setThreads] = useState(initialThreads);
+  const token = localStorage.getItem("shopownertoken");
+  const decodedToken = jwtDecode(token);
+  const shopOwnerId = decodedToken.id;
+  const shopId = decodedToken.shopId;
+
+  const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const newSocket = io(import.meta.env.VITE_API_URL);
+    setSocket(newSocket);
+
+    newSocket.emit("join_room", { shopOwnerId, shopId, userType: "shopowner" });
+
+    newSocket.on("receive_message", (data) => {
+      setThreads((prevThreads) => {
+        const existingThread = prevThreads.find(t => t.userId === data.userId);
+        
+        if (existingThread) {
+          return prevThreads.map(t => 
+            t.userId === data.userId 
+              ? { ...t, messages: [...t.messages, { type: "received", text: data.message, time: data.time }] }
+              : t
+          );
+        } else {
+          return [...prevThreads, { userId: data.userId, sender: `User ${data.userId}`, messages: [{ type: "received", text: data.message, time: data.time }] }];
+        }
+      });
+    });
+
+    return () => {
+      newSocket.off("receive_message");
+      newSocket.disconnect();
+    };
+  }, [shopOwnerId, shopId]);
 
   const sendMessage = () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !socket || !activeThread) return;
 
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const currentTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+    const msgData = {
+      message: newMessage,
+      sender: "owner",
+      userId: activeThread.userId,
+      shopId,
+      shopOwnerId,
+      time: new Date().toLocaleTimeString()
+    };
 
     const updatedThread = {
       ...activeThread,
-      messages: [...activeThread.messages, { type: "sent", text: newMessage, time: currentTime }],
+      messages: [...activeThread.messages, { type: "sent", text: newMessage, time: msgData.time }],
     };
 
     setActiveThread(updatedThread);
-    setThreads(threads.map(t => (t.id === updatedThread.id ? updatedThread : t)));
+    setThreads(threads.map(t => (t.userId === updatedThread.userId ? updatedThread : t)));
+    
+    socket.emit("send_message", msgData);
     setNewMessage("");
   };
 
@@ -68,7 +89,7 @@ const Messages = () => {
         <ul className="thread-list">
           {filteredThreads.map(thread => (
             <li
-              key={thread.id}
+              key={thread.userId}
               className="thread-item"
               onClick={() => setActiveThread(thread)}
             >

@@ -68,7 +68,7 @@ function App() {
       <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
       <Route path="userprofile" element={<UserProfileDash />} />
       <Route path="shop/:id" element={<ShowShopDetails />} />
-      <Route path="chat" element={<Chat />} />
+      <Route path="chat/:id" element={<Chat />} />
    </Route> 
    
 

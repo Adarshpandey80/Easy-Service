@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 import "../Style/chat.css";
 
 function Chat() {
+    const { id } = useParams();
+
+
+    const shopId = id; 
+    const token = localStorage.getItem("Usertoken");
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.id; 
+    console.log(userId)
+
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
     const [socket, setSocket] = useState(null);
@@ -11,8 +22,11 @@ function Chat() {
         const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
 
+        // Join room for this user-shop conversation
+        newSocket.emit("join_room", { userId, shopId, userType: "user" });
+
         newSocket.on("receive_message", (data) => {
-            // Add received message from other users
+            // Add received message from shopowner
             setChat((prev) => [...prev, data]);
         });
 
@@ -20,7 +34,7 @@ function Chat() {
             newSocket.off("receive_message");
             newSocket.disconnect();
         };
-    }, []);
+    }, [userId, shopId]);
 
     const sendMessage = () => {
         if (!message.trim() || !socket) return;
@@ -28,13 +42,15 @@ function Chat() {
         const msgData = {
             message,
             sender: "user",
+            userId,
+            shopId,
             time: new Date().toLocaleTimeString()
         };
 
         // Add message locally (sent)
         setChat((prev) => [...prev, msgData]);
         
-        // Send to server
+        // Send to server with room info
         socket.emit("send_message", msgData);
         setMessage("");
     };

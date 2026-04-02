@@ -36,10 +36,32 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
+  // Join room for user-shopowner conversation
+  socket.on("join_room", (data) => {
+    const { userId, shopId, shopOwnerId, userType } = data;
+    const roomId = userType === "user" 
+      ? `user_${userId}_shop_${shopId}` 
+      : `owner_${shopOwnerId}_shop_${shopId}`;
+    
+    socket.join(roomId);
+    console.log(`${userType} joined room: ${roomId}`);
+  });
+
+  // Handle message sending
   socket.on("send_message", (data) => {
-    console.log("Message received:", data);
-    // Broadcast to all clients
-    io.emit("receive_message", { ...data, sender: "owner", time: new Date().toLocaleTimeString() });
+    const { userId, shopId, shopOwnerId } = data;
+    
+    if (data.sender === "user") {
+      // User sending message to shopowner
+      const roomId = `owner_${shopId}_shop_${shopId}`;
+      io.to(roomId).emit("receive_message", data);
+      console.log("Message sent from user to owner room:", roomId);
+    } else if (data.sender === "owner") {
+      // Shopowner sending message to user
+      const roomId = `user_${data.userId}_shop_${shopId}`;
+      io.to(roomId).emit("receive_message", data);
+      console.log("Message sent from owner to user room:", roomId);
+    }
   });
 
   socket.on("disconnect", () => {

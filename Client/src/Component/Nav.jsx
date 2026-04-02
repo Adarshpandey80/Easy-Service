@@ -7,10 +7,10 @@ import '../Style/Navbar.css'
 
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const checkToken = localStorage.getItem("token");
+    const checkToken = localStorage.getItem("Usertoken");
   
     const logout = () => {
-      localStorage.removeItem("token");
+      localStorage.removeItem("Usertoken");
       window.location.href = "/"; 
     }
 

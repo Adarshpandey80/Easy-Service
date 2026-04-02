@@ -79,7 +79,7 @@ const ShowShopDetails = () => {
       {/* Book Button */}
       <div className="book-section">
          <button className="book-btn">Book Service</button>
-         <button className="chat-btn" onClick={()=> navigator("/chat")}>Chat with Owner</button>
+         <button className="chat-btn" onClick={()=> navigator(`/chat/${shop._id}`)}>Chat with Owner</button>
       </div>
      
 

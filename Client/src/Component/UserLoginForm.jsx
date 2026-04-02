@@ -28,7 +28,7 @@ const UserLoginForm = () => {
       const response = await axios.post(`${api}/user/login`, formData);
       console.log(response.data.message);
       toast.success(response.data.message, { position: 'top-center' });
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("Usertoken", response.data.token);
       navigate('/');
     } catch (error) {
       console.error("Login error:", error);
