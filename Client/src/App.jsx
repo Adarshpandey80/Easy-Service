@@ -15,6 +15,7 @@ import UserSignupForm from './Component/UserSignupForm.jsx';
 import UserLoginForm from './Component/UserLoginForm.jsx';
 import UserProfileDash from './Component/UserProfileDash.jsx';
 import ShowShopDetails from './Component/ShowShopDetails.jsx';
+import Chat from './Component/Chat.jsx';
 
 import Footer from './Component/Footer.jsx'
 import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
@@ -67,6 +68,7 @@ function App() {
       <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
       <Route path="userprofile" element={<UserProfileDash />} />
       <Route path="shop/:id" element={<ShowShopDetails />} />
+      <Route path="chat" element={<Chat />} />
    </Route> 
    
 

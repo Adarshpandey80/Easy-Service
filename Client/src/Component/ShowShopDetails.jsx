@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../Style/ShowShopDetails.css";
 
 const ShowShopDetails = () => {
+  const navigator = useNavigate();
   const { id } = useParams();
   const [shop, setShop] = useState(null);
 
@@ -30,7 +32,7 @@ const ShowShopDetails = () => {
       {/* Top Section */}
       <div className="shop-header">
         <img
-          src={shop.shopImage?.[0] || "https://via.placeholder.com/400"}
+          src={shop.shopImage?.[0]}
           alt={shop.shopName}
         />
         <div>
@@ -75,7 +77,11 @@ const ShowShopDetails = () => {
       </div>
 
       {/* Book Button */}
-      <button className="book-btn">Book Service</button>
+      <div className="book-section">
+         <button className="book-btn">Book Service</button>
+         <button className="chat-btn" onClick={()=> navigator("/chat")}>Chat with Owner</button>
+      </div>
+     
 
     </div>
   );
