@@ -81,7 +81,7 @@ const Nav = () => {
           </div>
 
           <ul className={`nav-links ${isOpen ? "active" : ""}`}>
-            <li><Link to="/owner/shopOwnerLogin">Login</Link></li>
+            <li><Link to="/owner/ShopOwnerLoginForm">Login</Link></li>
             <li><Link to="/owner/shopkeeperSignup">Sign Up</Link></li>
           </ul>
         </nav>

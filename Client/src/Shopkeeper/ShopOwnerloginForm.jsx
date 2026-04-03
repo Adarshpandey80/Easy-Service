@@ -27,8 +27,8 @@ const UserLoginForm = () => {
       const response = await axios.post(`${api}/shopowner/login`, formData);
       localStorage.setItem("shopowner", response.data.token);
       toast.success("Login successful!");
-      // Navigate to shop owner dashboard after successful login
-      navigate('/shopOwnerDashboard');
+
+      navigate('/owner/Dashboard');
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login failed. Please check your credentials and try again.");

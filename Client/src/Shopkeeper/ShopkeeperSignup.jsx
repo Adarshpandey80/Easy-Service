@@ -390,7 +390,7 @@ const ShopkeeperSignup = () => {
 
           <button type="submit" className="submit-btn">Register Shop</button>
           <p className="login-link">
-            Already have an account? <Link to="/shopOwnerLogin">Login</Link>
+            Already have an account? <Link to="/owner/ShopOwnerLoginForm">Login</Link>
           </p>
         </form>
       </div>

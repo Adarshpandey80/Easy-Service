@@ -72,9 +72,10 @@ function App() {
 
   {/* Shop Owner Layout */}
     <Route path="/owner" element={<ShopOwnerLayout />}>
-      <Route index element={<Dashboard />} />
+      <Route index element={<ShopOwnerLoginForm/>} />
+      <Route path="ShopOwnerLoginForm" element={<ShopOwnerLoginForm/>} />
       <Route path="shopkeeperSignup" element={<ShopkeeperSignup />} />
-      <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
+      <Route path="dashboard" element={< Dashboard />} />
       <Route path="addworkerform" element={<Addworkerform />} />
       <Route path="workerlist" element={<WorkerList />} />
       <Route path="workereditform" element={<WorkerEditForm />} />
