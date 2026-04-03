@@ -18,7 +18,7 @@ import ShowShopDetails from './Component/ShowShopDetails.jsx';
 import Chat from './Component/Chat.jsx';
 
 import Footer from './Component/Footer.jsx'
-import ShopkeeperForm from './Shopkeeper/ShopkeeperForm.jsx'; 
+import ShopkeeperSignup from './Shopkeeper/ShopkeeperSignup.jsx'; 
 import ShopOwnerLoginForm from './Shopkeeper/ShopOwnerLoginForm.jsx';
 import ShopkeeperNavbar from './Shopkeeper/ShopkeeperNavbar.jsx';
 import Addworkerform from './Shopkeeper/ShopOwnerWorkers/Addworkerform.jsx';
@@ -64,8 +64,6 @@ function App() {
    <Route path="career" element={<Career />} />
       <Route path="login" element={<UserLoginForm />} />
       <Route path="signup" element={<UserSignupForm />} />
-      <Route path="shopkeeperForm" element={<ShopkeeperForm />} />
-      <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
       <Route path="userprofile" element={<UserProfileDash />} />
       <Route path="shop/:id" element={<ShowShopDetails />} />
       <Route path="chat/:id" element={<Chat />} />
@@ -75,6 +73,8 @@ function App() {
   {/* Shop Owner Layout */}
     <Route path="/owner" element={<ShopOwnerLayout />}>
       <Route index element={<Dashboard />} />
+      <Route path="shopkeeperSignup" element={<ShopkeeperSignup />} />
+      <Route path="shopOwnerLogin" element={<ShopOwnerLoginForm />} />
       <Route path="addworkerform" element={<Addworkerform />} />
       <Route path="workerlist" element={<WorkerList />} />
       <Route path="workereditform" element={<WorkerEditForm />} />

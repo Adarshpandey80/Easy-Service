@@ -5,10 +5,19 @@ import '../Style/ShopOwner/ShopOwnerNavbar.css';
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isWorkerOpen, setIsWorkerOpen] = useState(false);
-  const location = useLocation();  
+  const location = useLocation();
 
+
+  const checkToken = localStorage.getItem("shopowner");
+
+  const logout = () => {
+    localStorage.removeItem("shopowner");
+    window.location.href = "shopOwnerLogin";
+  };
   return (
-    <nav className="navbar">
+    <>
+      {checkToken ? (
+        <nav className="navbar">
       <div className="logo">
         <Link to="/owner">Service-Partner</Link>
       </div>
@@ -58,9 +67,26 @@ const Nav = () => {
         <li className={location.pathname === "/kyc" ? "active" : ""}>
           <Link to="/owner/kyc">KYC</Link>
         </li>
-        <li><Link to="/owner/logout">Logout</Link></li>
+        <li><Link to="/owner/logout" onClick={logout}>Logout</Link></li>
       </ul>
-    </nav>
+        </nav>
+      ) : (
+        <nav className="navbar">
+          <div className="logo">
+            <Link to="/">Service-Partner</Link>
+          </div>
+
+          <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+            ☰
+          </div>
+
+          <ul className={`nav-links ${isOpen ? "active" : ""}`}>
+            <li><Link to="/owner/shopOwnerLogin">Login</Link></li>
+            <li><Link to="/owner/shopkeeperSignup">Sign Up</Link></li>
+          </ul>
+        </nav>
+      )}
+    </>
   );
 };
 

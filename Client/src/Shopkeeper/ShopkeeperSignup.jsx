@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
-const ShopkeeperForm = () => {
+const ShopkeeperSignup = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -399,4 +399,4 @@ const ShopkeeperForm = () => {
 
 }
 
-export default ShopkeeperForm
+export default ShopkeeperSignup;

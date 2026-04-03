@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import "../Style/ShopOwner/Messages.css";
 
 const Messages = () => {
-  const token = localStorage.getItem("shopownertoken");
+  const token = localStorage.getItem("shopowner");
   const decodedToken = jwtDecode(token);
   const shopOwnerId = decodedToken.id;
   const shopId = decodedToken.shopId;

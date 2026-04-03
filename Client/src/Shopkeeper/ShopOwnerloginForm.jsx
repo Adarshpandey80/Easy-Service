@@ -75,7 +75,7 @@ const UserLoginForm = () => {
 
           {/* ✅ Signup Link */}
           <p className="signup-link">
-            Don’t have an account? <Link to="/shopkeeperForm" >Sign up</Link>
+            Don’t have an account? <Link to="/owner/shopkeeperSignup" >Sign up</Link>
           </p>
         </form>
       </div>
