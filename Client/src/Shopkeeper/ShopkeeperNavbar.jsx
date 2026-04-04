@@ -12,7 +12,7 @@ const Nav = () => {
 
   const logout = () => {
     localStorage.removeItem("shopowner");
-    window.location.href = "shopOwnerLogin";
+    window.location.href = "shopOwnerLoginForm";
   };
   return (
     <>

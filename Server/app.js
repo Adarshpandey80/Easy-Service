@@ -40,24 +40,37 @@ io.on("connection", (socket) => {
 
   // Join room for user-shopowner conversation
   socket.on("join_room", (data) => {
-    const { userId, shopId, shopOwnerId, userType } = data;
-    const roomId = `user_${userId}_shop_${shopId}`;
+    let { userId, shopId, shopOwnerId, userType } = data;
+    let roomId;
     
-    socket.join(roomId);
-    socket.userId = userId;
-    socket.shopId = shopId;
-    socket.shopOwnerId = shopOwnerId;
-    socket.userType = userType;
+    // Handle shopowner joining the shop-level room (Messages dashboard)
+    if (userType === "shopowner" && !userId) {
+      roomId = `shop_${shopId}`;
+      socket.join(roomId);
+      socket.shopOwnerId = shopOwnerId;
+      socket.shopId = shopId;
+      socket.userType = userType;
+      console.log(`Shop owner joined shop room: ${roomId}`);
+    } else {
+      // Regular user-shop conversation room
+      roomId = `user_${userId}_shop_${shopId}`;
+      socket.join(roomId);
+      socket.userId = userId;
+      socket.shopId = shopId;
+      socket.shopOwnerId = shopOwnerId;
+      socket.userType = userType;
+      console.log(`${userType} joined room: ${roomId} (shopOwnerId: ${shopOwnerId})`);
+    }
     
-    console.log(`${userType} joined room: ${roomId}`);
-    io.to(roomId).emit("room_joined", { roomId, userType });
+    io.to(roomId).emit("room_joined", { roomId, userType, shopOwnerId });
   });
 
   // Handle message sending
   socket.on("send_message", async (data) => {
     try {
       const { userId, shopId, message, sender, shopOwnerId } = data;
-      const roomId = `user_${userId}_shop_${shopId}`;
+      const userRoomId = `user_${userId}_shop_${shopId}`;
+      const shopRoomId = `shop_${shopId}`;
 
       // Prepare message data
       const messageData = {
@@ -82,9 +95,13 @@ io.on("connection", (socket) => {
         messageData.sender = "owner";
       }
 
-      // Emit to room
-      io.to(roomId).emit("receive_message", messageData);
-      console.log("Message sent and saved:", roomId);
+      // Emit to user-specific room
+      io.to(userRoomId).emit("receive_message", messageData);
+      
+      // Also emit to shop-level room (for Messages dashboard)
+      io.to(shopRoomId).emit("receive_message", messageData);
+      
+      console.log("Message sent and saved:", userRoomId, "and", shopRoomId);
     } catch (error) {
       console.error("Error sending message:", error);
       socket.emit("error", { message: "Failed to send message" });

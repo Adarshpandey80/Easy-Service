@@ -1,25 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 import "../Style/chat.css";
 
 function Chat() {
+    const navigate = useNavigate();
     const { id } = useParams();
-
-    const shopId = id; 
-    const token = localStorage.getItem("Usertoken");
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.id; 
+    const shopId = id;
 
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
     const [socket, setSocket] = useState(null);
     const [shopOwnerId, setShopOwnerId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [userId, setUserId] = useState(null);
+
+    // Validate and decode user token
+    useEffect(() => {
+        try {
+            const token = localStorage.getItem("Usertoken");
+            if (!token) {
+                setError("No authentication token found. Please login.");
+                navigate("/user-login");
+                return;
+            }
+            const decodedToken = jwtDecode(token);
+            setUserId(decodedToken.id);
+        } catch (err) {
+            console.error("Token decode error:", err);
+            setError("Invalid token. Please login again.");
+            navigate("/user-login");
+        }
+    }, [navigate]);
 
     // Load shop owner ID and chat history
     useEffect(() => {
+        if (!userId) return;
+
         const fetchShopData = async () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/shops/shopowner/${shopId}`);
@@ -49,6 +68,7 @@ function Chat() {
                 }
             } catch (error) {
                 console.error("Error loading shop or chat history:", error);
+                setError("Failed to load chat history");
             } finally {
                 setLoading(false);
             }
@@ -74,11 +94,17 @@ function Chat() {
 
         newSocket.on("receive_message", (data) => {
             // Add received message
+            console.log("User received message:", data);
             setChat((prev) => [...prev, data]);
+        });
+
+        newSocket.on("error", (error) => {
+            console.error("Socket error:", error);
         });
 
         return () => {
             newSocket.off("receive_message");
+            newSocket.off("error");
             newSocket.disconnect();
         };
     }, [userId, shopId, shopOwnerId]);
@@ -94,16 +120,17 @@ function Chat() {
             shopOwnerId,
             time: new Date().toLocaleTimeString()
         };
-
-        // Add message locally (sent)
-        setChat((prev) => [...prev, msgData]);
         
-        // Send to server with room info
+        // Send to server - don't add locally, wait for server broadcast
         socket.emit("send_message", msgData);
         setMessage("");
     };
 
-    if (loading) {
+    if (error) {
+        return <div className="chat-wrapper" style={{ padding: "20px", color: "red" }}>{error}</div>;
+    }
+
+    if (loading || !userId) {
         return <div className="chat-wrapper">Loading chat...</div>;
     }
 
