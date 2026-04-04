@@ -4,63 +4,50 @@ import { useParams } from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 import "../Style/chat.css";
 
-function Chat() {
-    const { id } = useParams();
+function ShopOwnerChat() {
+    const { userId, shopId } = useParams();
 
-    const shopId = id; 
-    const token = localStorage.getItem("Usertoken");
+    const token = localStorage.getItem("ShopOwnertoken");
     const decodedToken = jwtDecode(token);
-    const userId = decodedToken.id; 
+    const shopOwnerId = decodedToken.id; 
 
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
     const [socket, setSocket] = useState(null);
-    const [shopOwnerId, setShopOwnerId] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Load shop owner ID and chat history
+    // Load chat history
     useEffect(() => {
-        const fetchShopData = async () => {
+        const fetchChatHistory = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/shops/shopowner/${shopId}`);
-                const shopData = await response.json();
+                const chatResponse = await fetch(
+                    `${import.meta.env.VITE_API_URL}/chat/history/${userId}/${shopOwnerId}`
+                );
+                const chatData = await chatResponse.json();
                 
-                if (shopData && shopData._id) {
-                    const shopOwnerId = shopData._id;
-                    setShopOwnerId(shopOwnerId);
-                    
-                    // Load chat history
-                    const chatResponse = await fetch(
-                        `${import.meta.env.VITE_API_URL}/chat/history/${userId}/${shopOwnerId}`
-                    );
-                    const chatData = await chatResponse.json();
-                    
-                    if (chatData.success && chatData.messages) {
-                        // Format messages from DB
-                        const formattedMessages = chatData.messages.map((msg) => ({
-                            message: msg.text,
-                            sender: msg.senderModel === "User" ? "user" : "owner",
-                            userId: msg.sender,
-                            shopId,
-                            time: new Date(msg.createdAt).toLocaleTimeString(),
-                        }));
-                        setChat(formattedMessages);
-                    }
+                if (chatData.success && chatData.messages) {
+                    // Format messages from DB
+                    const formattedMessages = chatData.messages.map((msg) => ({
+                        message: msg.text,
+                        sender: msg.senderModel === "User" ? "user" : "owner",
+                        userId: msg.sender,
+                        shopId,
+                        time: new Date(msg.createdAt).toLocaleTimeString(),
+                    }));
+                    setChat(formattedMessages);
                 }
             } catch (error) {
-                console.error("Error loading shop or chat history:", error);
+                console.error("Error loading chat history:", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchShopData();
-    }, [userId, shopId]);
+        fetchChatHistory();
+    }, [userId, shopOwnerId, shopId]);
 
     // Setup socket connection
     useEffect(() => {
-        if (!shopOwnerId) return;
-
         const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
 
@@ -69,7 +56,7 @@ function Chat() {
             userId, 
             shopId, 
             shopOwnerId, 
-            userType: "user" 
+            userType: "owner" 
         });
 
         newSocket.on("receive_message", (data) => {
@@ -88,7 +75,7 @@ function Chat() {
 
         const msgData = {
             message,
-            sender: "user",
+            sender: "owner",
             userId,
             shopId,
             shopOwnerId,
@@ -117,7 +104,7 @@ function Chat() {
                         className="chat-avatar"
                     />
                     <div>
-                        <h3>Shop Support</h3>
+                        <h3>User Support</h3>
                         <span className="status online">● Online</span>
                     </div>
                 </div>
@@ -150,4 +137,4 @@ function Chat() {
     );
 }
 
-export default Chat;
+export default ShopOwnerChat;

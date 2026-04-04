@@ -26,6 +26,10 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shopId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ShopOwner",
+    },
   },
   { timestamps: true }
 );
@@ -51,4 +55,4 @@ const threadSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Thread", threadSchema);
+module.exports = mongoose.model("Message", messageSchema);
