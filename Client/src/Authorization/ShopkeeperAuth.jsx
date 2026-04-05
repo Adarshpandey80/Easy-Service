@@ -4,6 +4,7 @@ import {useNavigate , useLocation} from 'react-router-dom'
 function ShopkeeperAuth( {children} ) {
   const token = localStorage.getItem("shopowner");
   const location = useLocation();
+  const Navigate = useNavigate();
 
   // Not logged in → redirect to login
   if (!token) {

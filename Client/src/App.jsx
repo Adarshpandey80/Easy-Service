@@ -35,6 +35,8 @@ import Kyc from './Shopkeeper/Kyc.jsx';
 import AdminDashboard from './SuperAdmin/AdminDashboard.jsx';
 import AdminUsers from './SuperAdmin/AdminUsers.jsx';
 
+import ShopOwnerAuth from './Authorization/ShopkeeperAuth.jsx';
+
 
 function App() {
   return (
@@ -71,8 +73,8 @@ function App() {
    
 
   {/* Shop Owner Layout */}
-    <Route path="/owner" element={<ShopOwnerLayout />}>
-      <Route index element={<ShopOwnerLoginForm/>} />
+    <Route path="/owner" element={    <ShopOwnerAuth> <ShopOwnerLayout/> </ShopOwnerAuth> }>
+      <Route index element={< Dashboard />} />
       <Route path="ShopOwnerLoginForm" element={<ShopOwnerLoginForm/>} />
       <Route path="shopkeeperSignup" element={<ShopkeeperSignup />} />
       <Route path="dashboard" element={< Dashboard />} />

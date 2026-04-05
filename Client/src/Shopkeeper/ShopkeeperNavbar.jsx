@@ -19,7 +19,7 @@ const Nav = () => {
       {checkToken ? (
         <nav className="navbar">
       <div className="logo">
-        <Link to="/owner">Service-Partner</Link>
+        <Link to="/owner/dashboard">Service-Partner</Link>
       </div>
 
       <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
@@ -27,11 +27,11 @@ const Nav = () => {
       </div>
 
       <ul className={`nav-links ${isOpen ? "active" : ""}`}>
-        <li className={location.pathname === "/" ? "active" : ""}>
-          <Link to="/">Dashboard</Link>
+        <li className={location.pathname === "/owner/dashboard" ? "active" : ""}>
+          <Link to="/owner/dashboard">Dashboard</Link>
         </li>
-        <li className={location.pathname === "/career" ? "active" : ""}>
-          <Link to="/services">My Services</Link>
+        <li className={location.pathname === "/owner/services" ? "active" : ""}>
+          <Link to="/owner/services">My Services</Link>
         </li>
 
         {/* Workers Dropdown */}
