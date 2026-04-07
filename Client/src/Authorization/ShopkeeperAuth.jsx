@@ -1,12 +1,12 @@
-import React from 'react'
-import {useNavigate , useLocation} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 
-function ShopkeeperAuth( {children} ) {
+function ShopkeeperAuth({ children }) {
   const token = localStorage.getItem("shopowner");
   const location = useLocation();
-  const Navigate = useNavigate();
 
-  // Not logged in → redirect to login
+  // Not logged in → redirect
+  useEffect(() => {
   if (!token) {
     return (
       <Navigate
@@ -16,10 +16,10 @@ function ShopkeeperAuth( {children} ) {
       />
     );
   }
+    }, [token]);
 
   // Logged in → allow access
   return children;
-  
 }
 
-export default ShopkeeperAuth
+export default ShopkeeperAuth;
