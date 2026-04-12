@@ -124,7 +124,92 @@ const shopOwnerLogin = async (req, res) => {
   }
 };
 
+
+
+const shopOwnerDashboard = async (req, res) => {
+  try {
+    const shopOwnerId = req.params.id;
+    const shopOwner = await shopOwnerModel.findById(shopOwnerId);
+    if (!shopOwner) {
+      return res.status(404).json({ message: "Shop owner not found" });
+    }
+
+    // Get orders data
+    const Order = require("../models/order.model");
+    const Worker = require("../models/worker.model");
+    const Payment = require("../models/payment.model");
+
+    const orders = await Order.find({ shopOwner: shopOwnerId }).populate("customer", "name").populate("assignedWorker", "name");
+    const workers = await Worker.find({ shopOwner: shopOwnerId });
+    const payments = await Payment.find({ shopOwner: shopOwnerId });
+
+    // Calculate KPIs
+    const totalWorkers = workers.length;
+    const activeOrders = orders.filter(o => o.status === "Pending" || o.status === "Assigned").length;
+    const completedOrders = orders.filter(o => o.status === "Completed").length;
+    const totalRevenue = payments.reduce((sum, p) => sum + p.amount, 0);
+    const pendingPayments = payments.filter(p => p.status === "Pending").reduce((sum, p) => sum + p.amount, 0);
+
+    // Get worker status breakdown
+    const workerStatus = {
+      available: workers.filter(w => w.status === "Active").length,
+      busy: orders.filter(o => o.status === "Assigned").length,
+      offline: workers.filter(w => w.status === "Inactive").length,
+    };
+
+    // Get recent orders (last 5)
+    const recentOrders = orders.slice(-5).reverse();
+
+    // Get last 6 months of revenue data
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+    
+    const monthlyRevenue = {};
+    for (let i = 0; i < 6; i++) {
+      const date = new Date();
+      date.setMonth(date.getMonth() - i);
+      const month = date.toLocaleString('default', { month: 'short' });
+      monthlyRevenue[month] = 0;
+    }
+
+    payments.forEach(payment => {
+      if (payment.date >= sixMonthsAgo) {
+        const month = new Date(payment.date).toLocaleString('default', { month: 'short' });
+        monthlyRevenue[month] += payment.amount;
+      }
+    });
+
+    const revenueData = Object.entries(monthlyRevenue).reverse().map(([month, revenue]) => ({ month, revenue }));
+
+    res.status(200).json({
+      shopOwner,
+      kpis: {
+        totalWorkers,
+        activeOrders,
+        completedOrders,
+        totalRevenue,
+        pendingPayments,
+      },
+      workerStatus,
+      recentOrders,
+      revenueData,
+      orders: orders.map(o => ({
+        id: o._id,
+        customerName: o.customerName,
+        service: o.service,
+        status: o.status,
+        date: o.date,
+        workerName: o.assignedWorker?.name || "Not Assigned",
+      })),
+    });
+  } catch (error) {
+    console.error("Error fetching shop owner:", error);
+    res.status(500).json({ message: "Server error fetching shop owner", error: error.message });
+  }
+};
+
 module.exports = {
   shopOwnerRegister,
-  shopOwnerLogin
+  shopOwnerLogin,
+  shopOwnerDashboard
 };
