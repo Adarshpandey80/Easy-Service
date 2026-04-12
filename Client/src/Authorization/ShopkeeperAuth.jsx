@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ShopkeeperAuth({ children }) {
   const token = localStorage.getItem("shopowner");
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Not logged in → redirect
   useEffect(() => {
-  if (!token) {
-    return (
-      <Navigate
-        to="/owner/ShopOwnerLoginForm"
-        replace
-        state={{ from: location.pathname }}
-      />
-    );
-  }
-    }, [token]);
+    // Not logged in → redirect (only if not already on login page)
+    if (!token && !location.pathname.includes("ShopOwnerLoginForm")) {
+      navigate("/owner/ShopOwnerLoginForm", { 
+        replace: true,
+        state: { from: location.pathname }
+      });
+    }
+  }, [token, location.pathname, navigate]);
 
-  // Logged in → allow access
+  // Not logged in and not on login page → don't render children yet
+  if (!token && !location.pathname.includes("ShopOwnerLoginForm")) {
+    return null;
+  }
+
+  // Logged in or on login page → allow access
   return children;
 }
 

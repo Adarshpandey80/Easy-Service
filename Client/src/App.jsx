@@ -73,7 +73,7 @@ function App() {
    
 
   {/* Shop Owner Layout */}
-    <Route path="/owner" element={    <ShopOwnerAuth> <ShopOwnerLayout/> </ShopOwnerAuth> }>
+  <Route path="/owner/*" element={ <ShopOwnerAuth> <ShopOwnerLayout /> </ShopOwnerAuth >}>
       <Route index element={< Dashboard />} />
       <Route path="ShopOwnerLoginForm" element={<ShopOwnerLoginForm/>} />
       <Route path="shopkeeperSignup" element={<ShopkeeperSignup />} />
