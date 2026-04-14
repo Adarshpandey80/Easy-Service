@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../Style/ShopOwner/ShopOwnerNavbar.css';
 
@@ -6,6 +6,25 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isWorkerOpen, setIsWorkerOpen] = useState(false);
   const location = useLocation();
+  const workerDropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (workerDropdownRef.current && !workerDropdownRef.current.contains(event.target)) {
+        setIsWorkerOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsWorkerOpen(false);
+    setIsOpen(false);
+  }, [location.pathname]);
 
 
   const checkToken = localStorage.getItem("shopowner");
@@ -35,15 +54,15 @@ const Nav = () => {
         </li>
 
         {/* Workers Dropdown */}
-        <li className={`dropdown ${location.pathname.startsWith("/workers") ? "active" : ""}`}>
+        <li ref={workerDropdownRef} className={`dropdown ${location.pathname.startsWith("/workers") ? "active" : ""}`}>
           <span onClick={() => setIsWorkerOpen(!isWorkerOpen)}>Workers ▾</span>
           {isWorkerOpen && (
             <ul className="dropdown-menu">
               <li className={location.pathname === "/workers/add" ? "active" : ""}>
-                <Link to="/owner/addworkerform">Add Worker</Link>
+                <Link to="/owner/addworkerform" onClick={() => setIsWorkerOpen(false)}>Add Worker</Link>
               </li>
               <li className={location.pathname === "/workers/list" ? "active" : ""}>
-                <Link to="/owner/workerlist">Worker List</Link>
+                <Link to="/owner/workerlist" onClick={() => setIsWorkerOpen(false)}>Worker List</Link>
               </li>
               {/* <li className={location.pathname === "/workers/cards" ? "active" : ""}>
                 <Link to="/workers/cards">Worker Cards</Link>
