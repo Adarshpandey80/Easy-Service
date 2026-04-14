@@ -104,7 +104,6 @@ const kycSchema = new mongoose.Schema(
 );
 
 // Index for faster queries
-kycSchema.index({ shopOwnerId: 1 });
 kycSchema.index({ status: 1 });
 kycSchema.index({ isVerified: 1 });
 
