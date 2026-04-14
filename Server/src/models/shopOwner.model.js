@@ -14,7 +14,13 @@ const serviceSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0
-  }
+  },
+  status: {
+    type: String,
+    enum: ["Active", "Inactive"],
+    default: "Active"
+  },
+  
 }, { _id: false });
 
 const shopOwnerSchema = new mongoose.Schema(

@@ -208,8 +208,144 @@ const shopOwnerDashboard = async (req, res) => {
   }
 };
 
+const getShopOwnerServices = async (req, res) => {
+  try {
+    const shopOwnerId = req.params.id;
+    const shopOwner = await shopOwnerModel.findById(shopOwnerId);
+    if (!shopOwner) {
+      return res.status(404).json({ message: "Shop owner not found" });
+    }
+    const services = shopOwner.services.map((service, index) => ({
+      id: index,
+      category: service.category,
+      subcategory: service.subcategory,
+      price: service.price,
+      status: service.status || "Active",
+     
+    }));
+
+    res.status(200).json(services);
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    res.status(500).json({ message: "Server error fetching services", error: error.message });
+  }
+};
+
+const createShopOwnerService = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category, subcategory, price, status} = req.body;
+
+    if (!category || !subcategory || price === undefined) {
+      return res.status(400).json({ message: "Category, subcategory, and price are required" });
+    }
+
+    const shopOwner = await shopOwnerModel.findById(id);
+    if (!shopOwner) {
+      return res.status(404).json({ message: "Shop owner not found" });
+    }
+
+    shopOwner.services.push({
+      category,
+      subcategory,
+      price: Number(price),
+      status: status || "Active",
+   
+    });
+
+    await shopOwner.save();
+
+    const createdService = shopOwner.services[shopOwner.services.length - 1];
+
+    return res.status(201).json({
+      message: "Service created successfully",
+      service: {
+        id: shopOwner.services.length - 1,
+        category: createdService.category,
+        subcategory: createdService.subcategory,
+        price: createdService.price,
+        status: createdService.status || "Active",
+        icon: createdService.icon || "",
+      },
+    });
+  } catch (error) {
+    console.error("Error creating service:", error);
+    res.status(500).json({ message: "Server error creating service", error: error.message });
+  }
+};
+
+const updateShopOwnerService = async (req, res) => {
+  try {
+    const { id, serviceIndex } = req.params;
+    const { category, subcategory, price, status, icon } = req.body;
+
+    const shopOwner = await shopOwnerModel.findById(id);
+    if (!shopOwner) {
+      return res.status(404).json({ message: "Shop owner not found" });
+    }
+
+    const index = Number(serviceIndex);
+    if (Number.isNaN(index) || index < 0 || index >= shopOwner.services.length) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    const service = shopOwner.services[index];
+
+    if (category !== undefined) service.category = category;
+    if (subcategory !== undefined) service.subcategory = subcategory;
+    if (price !== undefined) service.price = Number(price);
+    if (status !== undefined) service.status = status;
+    if (icon !== undefined) service.icon = icon;
+
+    await shopOwner.save();
+
+    return res.status(200).json({
+      message: "Service updated successfully",
+      service: {
+        id: index,
+        category: service.category,
+        subcategory: service.subcategory,
+        price: service.price,
+        status: service.status || "Active",
+        icon: service.icon || "",
+      },
+    });
+  } catch (error) {
+    console.error("Error updating service:", error);
+    res.status(500).json({ message: "Server error updating service", error: error.message });
+  }
+};
+
+const deleteShopOwnerService = async (req, res) => {
+  try {
+    const { id, serviceIndex } = req.params;
+
+    const shopOwner = await shopOwnerModel.findById(id);
+    if (!shopOwner) {
+      return res.status(404).json({ message: "Shop owner not found" });
+    }
+
+    const index = Number(serviceIndex);
+    if (Number.isNaN(index) || index < 0 || index >= shopOwner.services.length) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    shopOwner.services.splice(index, 1);
+    await shopOwner.save();
+
+    return res.status(200).json({ message: "Service deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting service:", error);
+    res.status(500).json({ message: "Server error deleting service", error: error.message });
+  }
+};
+
 module.exports = {
   shopOwnerRegister,
   shopOwnerLogin,
-  shopOwnerDashboard
+  shopOwnerDashboard,
+  getShopOwnerServices,
+  createShopOwnerService,
+  updateShopOwnerService,
+  deleteShopOwnerService,
 };

@@ -10,5 +10,9 @@ router.post("/register", upload.array("shopImage" , 5), shopOwnerController.shop
 
 router.post("/login", shopOwnerController.shopOwnerLogin);
 router.get("/dashboard/:id", shopOwnerController.shopOwnerDashboard);
+router.get("/services/:id", shopOwnerController.getShopOwnerServices);
+router.post("/services/:id", shopOwnerController.createShopOwnerService);
+router.put("/services/:id/:serviceIndex", shopOwnerController.updateShopOwnerService);
+router.delete("/services/:id/:serviceIndex", shopOwnerController.deleteShopOwnerService);
 
 module.exports = router;
