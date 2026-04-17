@@ -3,6 +3,20 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const cloudinary = require("../../cloudinary");
 
+const getShopOwnerIdFromToken = (req) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.id;
+  } catch (error) {
+    return null;
+  }
+};
+
 const shopOwnerRegister = async (req, res) => {
   
   try {
@@ -344,20 +358,11 @@ const deleteShopOwnerService = async (req, res) => {
 const addWorker = async (req, res) => {
   try {
     const { name, phone, skill, experience, availability } = req.body;
-    const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized: token missing" });
+    const shopOwnerId = getShopOwnerIdFromToken(req);
+    if (!shopOwnerId) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (tokenError) {
-      return res.status(401).json({ message: "Unauthorized: invalid token" });
-    }
-
-    const shopOwnerId = decoded.id;
     const idProofFile = req.files?.idProof ? req.files.idProof[0] : null;
     const photoFile = req.files?.photo ? req.files.photo[0] : null;
 
@@ -396,14 +401,72 @@ const addWorker = async (req, res) => {
 
 const fetchWorkers = async (req, res) => {
   try {
-     const worker = require("../models/worker.model");
-     const allWorkers = await worker.find();
+     const shopOwnerId = getShopOwnerIdFromToken(req);
+     if (!shopOwnerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+     }
+
+     const Worker = require("../models/worker.model");
+     const allWorkers = await Worker.find({ shopOwner: shopOwnerId }).sort({ createdAt: -1 });
      res.status(200).json(allWorkers);
   } catch (error) {
     console.error("Error fetching workers:", error);
     res.status(500).json({ message: "Server error fetching workers", error: error.message });
   }
 }
+
+const fetchWorkerById = async (req, res) => {
+  try {
+    const shopOwnerId = getShopOwnerIdFromToken(req);
+    if (!shopOwnerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const Worker = require("../models/worker.model");
+    const worker = await Worker.findOne({ _id: req.params.id, shopOwner: shopOwnerId });
+
+    if (!worker) {
+      return res.status(404).json({ message: "Worker not found" });
+    }
+
+    res.status(200).json(worker);
+  } catch (error) {
+    console.error("Error fetching worker by id:", error);
+    res.status(500).json({ message: "Server error fetching worker", error: error.message });
+  }
+};
+
+const updateWorker = async (req, res) => {
+  try {
+    const shopOwnerId = getShopOwnerIdFromToken(req);
+    if (!shopOwnerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { name, phone, skill, status } = req.body;
+    const Worker = require("../models/worker.model");
+
+    const updatedWorker = await Worker.findOneAndUpdate(
+      { _id: req.params.id, shopOwner: shopOwnerId },
+      {
+        ...(name !== undefined ? { name: String(name).trim() } : {}),
+        ...(phone !== undefined ? { phone: String(phone).trim() } : {}),
+        ...(skill !== undefined ? { skill: String(skill).trim() } : {}),
+        ...(status !== undefined ? { status } : {}),
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedWorker) {
+      return res.status(404).json({ message: "Worker not found" });
+    }
+
+    res.status(200).json({ message: "Worker updated successfully", worker: updatedWorker });
+  } catch (error) {
+    console.error("Error updating worker:", error);
+    res.status(500).json({ message: "Server error updating worker", error: error.message });
+  }
+};
 
 module.exports = {
   shopOwnerRegister,
@@ -414,6 +477,8 @@ module.exports = {
   updateShopOwnerService,
   deleteShopOwnerService,
   addWorker,
-  fetchWorkers
+  fetchWorkers,
+  fetchWorkerById,
+  updateWorker
 
 };

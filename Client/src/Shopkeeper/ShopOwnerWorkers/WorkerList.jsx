@@ -8,9 +8,6 @@ import { useEffect } from "react";
 
 const WorkersList = () => {
     const navigation = useNavigate();
-    if (navigation.state === "loading") {
-      return <div className="loader">Loading...</div>; // Display a loading indicator
-    }
   const [workers, setWorkers] = useState([]);
 
 const fetchWorkers = async () => {
@@ -36,13 +33,13 @@ useEffect(() => {
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this worker?");
     if (confirmDelete) {
-      setWorkers(workers.filter((worker) => worker.id !== id));
+      setWorkers(workers.filter((worker) => worker._id !== id));
     }
   };
 
   const handleEdit = (id) => {
-    // navigation(`/workers/edit/${id}`);
-    navigation(`/workereditform`, { state: { workerId: id } });
+    navigation(`/owner/workereditform/${id}`);
+    
   };
 
   return (
@@ -50,19 +47,19 @@ useEffect(() => {
       <h2>Workers List</h2>
       <div className="workers-grid">
         {workers.map((worker) => (
-          <div key={worker.id} className="worker-card">
+          <div key={worker._id} className="worker-card">
             <img src={worker.photo} alt={worker.name} className="worker-photo" />
             <div className="workers-info">
               <h3>{worker.name}</h3>
               <p><strong>📞</strong> {worker.phone}</p>
-              <p><strong>👷</strong> {worker.role}</p>
+              <p><strong>👷</strong> {worker.skill}</p>
               <span className={`status ${worker.status === "Active" ? "active" : "inactive"}`}>
                 {worker.status}
               </span>
             </div>
             <div className="workers-actions">
-              <button className="edit-btn" onClick={() => handleEdit(worker.id)}>Edit</button>
-              <button className="delete-btn" onClick={() => handleDelete(worker.id)}>Delete</button>
+              <button className="edit-btn" onClick={() => handleEdit(worker._id)}>Edit</button>
+              <button className="delete-btn" onClick={() => handleDelete(worker._id)}>Delete</button>
             </div>
           </div>
         ))}
