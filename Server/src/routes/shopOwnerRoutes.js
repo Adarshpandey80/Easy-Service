@@ -15,5 +15,6 @@ router.post("/services/:id", shopOwnerController.createShopOwnerService);
 router.put("/services/:id/:serviceIndex", shopOwnerController.updateShopOwnerService);
 router.delete("/services/:id/:serviceIndex", shopOwnerController.deleteShopOwnerService);
 router.post("/addworkers", upload.fields([{ name: "idProof", maxCount: 1 }, { name: "photo", maxCount: 1 }]), shopOwnerController.addWorker);
+router.get("/fetchworkers", shopOwnerController.fetchWorkers);
 
 module.exports = router;

@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../Style/ShopWorker/AddWorkerForm.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+
+const SKILL_OPTIONS = [
+  "Electrician",
+  "Plumber",
+  "AC Repair",
+  "Refrigerator Repair",
+  "Washing Machine Repair",
+  "Microwave Repair",
+  "Carpenter",
+  "Painter",
+  "General Maintenance",
+];
 
 const AddWorkerForm = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +28,8 @@ const AddWorkerForm = () => {
 
   const [preview, setPreview] = useState({ idProof: "", photo: "" });
   const [errors, setErrors] = useState({});
+  const [isSkillDropdownOpen, setIsSkillDropdownOpen] = useState(false);
+  const skillDropdownRef = useRef(null);
 
   // Handle input change
   const handleChange = (e) => {
@@ -31,6 +45,32 @@ const AddWorkerForm = () => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const selectedSkillValues = formData.skill
+    ? formData.skill.split(",").map((item) => item.trim()).filter(Boolean)
+    : [];
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (skillDropdownRef.current && !skillDropdownRef.current.contains(event.target)) {
+        setIsSkillDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const handleSkillSelection = (skillOption) => {
+    const isAlreadySelected = selectedSkillValues.includes(skillOption);
+
+    const updatedSkills = isAlreadySelected
+      ? selectedSkillValues.filter((skill) => skill !== skillOption)
+      : [...selectedSkillValues, skillOption];
+
+    setFormData((prev) => ({ ...prev, skill: updatedSkills.join(", ") }));
+    setIsSkillDropdownOpen(false);
   };
 
   // Validate form
@@ -49,16 +89,31 @@ const AddWorkerForm = () => {
 
   // Handle submit
   const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
-      e.preventDefault();
         const api = import.meta.env.VITE_API_URL;
-        const res = await axios.post(`${api}/shopowner/addworkers`, formData, {  
+        const payload = new FormData();
+        payload.append("name", formData.name);
+        payload.append("phone", formData.phone);
+        payload.append("skill", formData.skill);
+        payload.append("experience", formData.experience);
+        payload.append("availability", formData.availability);
+        payload.append("idProof", formData.idProof);
+        payload.append("photo", formData.photo);
+
+        await axios.post(`${api}/shopowner/addworkers`, payload, {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("shopowner")}`,
           },
         });
-        toast.success("Worker added successfully!");
+        toast.success("Worker added successfully!").position("top-center");
         setFormData({
           name: "",
           phone: "",
@@ -70,8 +125,9 @@ const AddWorkerForm = () => {
         });
         setPreview({ idProof: "", photo: "" });
         setErrors({});
+        setIsSkillDropdownOpen(false);
     } catch (error) {
-      
+      toast.error(error?.response?.data?.message || "Failed to add worker");
     }
   };
 
@@ -107,14 +163,39 @@ const AddWorkerForm = () => {
 
         {/* Skill */}
         <div className="form-group">
-          <label>Skill</label>
-          <input
-            type="text"
-            name="skill"
-            placeholder="e.g., Electrician, AC Repair, Washing Machine"
-            value={formData.skill}
-            onChange={handleChange}
-          />
+          <label>Skill (Select Multiple)</label>
+          <div className="skill-dropdown" ref={skillDropdownRef}>
+            <button
+              type="button"
+              className={`skill-dropdown-toggle ${isSkillDropdownOpen ? "open" : ""}`}
+              onClick={() => setIsSkillDropdownOpen((prev) => !prev)}
+            >
+              {selectedSkillValues.length > 0
+                ? selectedSkillValues.join(", ")
+                : "Select skills"}
+              <span className="dropdown-arrow">▾</span>
+            </button>
+
+            {isSkillDropdownOpen && (
+              <div className="skill-dropdown-menu">
+                {SKILL_OPTIONS.map((skillOption) => {
+                  const isSelected = selectedSkillValues.includes(skillOption);
+                  return (
+                    <button
+                      type="button"
+                      key={skillOption}
+                      className={`skill-option ${isSelected ? "selected" : ""}`}
+                      onClick={() => handleSkillSelection(skillOption)}
+                    >
+                      <span>{skillOption}</span>
+                      {isSelected && <span className="check-mark">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          {/* <small className="helper-text">Click to open, choose a skill, dropdown closes automatically</small> */}
           {errors.skill && <span className="error">{errors.skill}</span>}
         </div>
 

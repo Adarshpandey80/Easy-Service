@@ -344,9 +344,22 @@ const deleteShopOwnerService = async (req, res) => {
 const addWorker = async (req, res) => {
   try {
     const { name, phone, skill, experience, availability } = req.body;
-    const shopOwnerId = req.user.id; 
-    const idProofFile = req.files['idProof'] ? req.files['idProof'][0] : null;
-    const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: token missing" });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (tokenError) {
+      return res.status(401).json({ message: "Unauthorized: invalid token" });
+    }
+
+    const shopOwnerId = decoded.id;
+    const idProofFile = req.files?.idProof ? req.files.idProof[0] : null;
+    const photoFile = req.files?.photo ? req.files.photo[0] : null;
 
     if (!name || !phone || !skill || !experience || !availability) {
       return res.status(400).json({ message: "All fields are required" });
@@ -356,18 +369,19 @@ const addWorker = async (req, res) => {
       return res.status(400).json({ message: "ID Proof and Photo are required" });
     }
 
-    const idProofResult = await cloudinary.uploader.upload(idProofFile.path);
-    const photoResult = await cloudinary.uploader.upload(photoFile.path);
+    // Files are already uploaded by multer-cloudinary storage.
+    const idProofUrl = idProofFile.path || "";
+    const photoUrl = photoFile.path || "";
 
     const Worker = require("../models/worker.model");
     const newWorker = new Worker({
-      name,
-      phone,
-      skill,
-      experience,
+      name: name.trim(),
+      phone: phone.trim(),
+      skill: skill.trim(),
+      experience: Number(experience),
       availability,
-      idProofUrl: idProofResult.secure_url,
-      photoUrl: photoResult.secure_url,
+      idProof: idProofUrl,
+      photo: photoUrl,
       shopOwner: shopOwnerId,
     });
 
@@ -379,6 +393,18 @@ const addWorker = async (req, res) => {
   }
 };
 
+
+const fetchWorkers = async (req, res) => {
+  try {
+     const worker = require("../models/worker.model");
+     const allWorkers = await worker.find();
+     res.status(200).json(allWorkers);
+  } catch (error) {
+    console.error("Error fetching workers:", error);
+    res.status(500).json({ message: "Server error fetching workers", error: error.message });
+  }
+}
+
 module.exports = {
   shopOwnerRegister,
   shopOwnerLogin,
@@ -387,6 +413,7 @@ module.exports = {
   createShopOwnerService,
   updateShopOwnerService,
   deleteShopOwnerService,
-  addWorker
+  addWorker,
+  fetchWorkers
 
 };
