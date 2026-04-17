@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../../Style/ShopWorker/AddWorkerForm.css";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddWorkerForm = () => {
   const [formData, setFormData] = useState({
@@ -46,16 +48,30 @@ const AddWorkerForm = () => {
   };
 
   // Handle submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
-      console.log("Worker Added ✅", formData);
-      alert("Worker added successfully!");
-      // Send formData (including files) to backend using FormData
+  const handleSubmit = async(e) => {
+    try {
+      e.preventDefault();
+        const api = import.meta.env.VITE_API_URL;
+        const res = await axios.post(`${api}/shopowner/addworkers`, formData, {  
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("shopowner")}`,
+          },
+        });
+        toast.success("Worker added successfully!");
+        setFormData({
+          name: "",
+          phone: "",
+          skill: "",
+          experience: "",
+          availability: "full-time",
+          idProof: null,
+          photo: null,
+        });
+        setPreview({ idProof: "", photo: "" });
+        setErrors({});
+    } catch (error) {
+      
     }
   };
 

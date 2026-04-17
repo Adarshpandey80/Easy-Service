@@ -340,6 +340,45 @@ const deleteShopOwnerService = async (req, res) => {
   }
 };
 
+
+const addWorker = async (req, res) => {
+  try {
+    const { name, phone, skill, experience, availability } = req.body;
+    const shopOwnerId = req.user.id; 
+    const idProofFile = req.files['idProof'] ? req.files['idProof'][0] : null;
+    const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
+
+    if (!name || !phone || !skill || !experience || !availability) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (!idProofFile || !photoFile) {
+      return res.status(400).json({ message: "ID Proof and Photo are required" });
+    }
+
+    const idProofResult = await cloudinary.uploader.upload(idProofFile.path);
+    const photoResult = await cloudinary.uploader.upload(photoFile.path);
+
+    const Worker = require("../models/worker.model");
+    const newWorker = new Worker({
+      name,
+      phone,
+      skill,
+      experience,
+      availability,
+      idProofUrl: idProofResult.secure_url,
+      photoUrl: photoResult.secure_url,
+      shopOwner: shopOwnerId,
+    });
+
+    await newWorker.save();
+    res.status(201).json({ message: "Worker added successfully", workerId: newWorker._id });
+  } catch (error) {
+    console.error("Error adding worker:", error);
+    res.status(500).json({ message: "Server error adding worker", error: error.message });
+  }
+};
+
 module.exports = {
   shopOwnerRegister,
   shopOwnerLogin,
@@ -348,4 +387,6 @@ module.exports = {
   createShopOwnerService,
   updateShopOwnerService,
   deleteShopOwnerService,
+  addWorker
+
 };
