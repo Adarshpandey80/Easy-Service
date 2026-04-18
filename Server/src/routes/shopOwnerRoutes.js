@@ -17,6 +17,6 @@ router.delete("/services/:id/:serviceIndex", shopOwnerController.deleteShopOwner
 router.post("/addworkers", upload.fields([{ name: "idProof", maxCount: 1 }, { name: "photo", maxCount: 1 }]), shopOwnerController.addWorker);
 router.get("/fetchworkers", shopOwnerController.fetchWorkers);
 router.get("/workers/:id", shopOwnerController.fetchWorkerById);
-router.put("/workers/:id", shopOwnerController.updateWorker);
-
+router.put("/Editworkers/:id", shopOwnerController.updateWorker);
+router.delete("/workers/:id", shopOwnerController.deleteWorker);
 module.exports = router;

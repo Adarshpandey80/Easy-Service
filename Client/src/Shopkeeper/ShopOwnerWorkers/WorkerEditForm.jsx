@@ -96,7 +96,7 @@ const WorkerEditForm = () => {
 
     try {
       const api = import.meta.env.VITE_API_URL;
-      await axios.put(`${api}/shopowner/workers/${id}`, formData, {
+      await axios.put(`${api}/shopowner/Editworkers/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("shopowner")}`,
         },
@@ -108,6 +108,8 @@ const WorkerEditForm = () => {
       alert("Error updating worker");
     }
   };
+
+
 
   return (
     <div className="worker-form-card-container">

@@ -468,6 +468,26 @@ const updateWorker = async (req, res) => {
   }
 };
 
+const deleteWorker = async (req, res) => {
+  try {
+    const shopOwnerId = getShopOwnerIdFromToken(req);
+    if (!shopOwnerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const id = req.params.id;
+    const Worker = require("../models/worker.model");
+    const deletedWorker = await Worker.findOneAndDelete({ _id: id, shopOwner: shopOwnerId });
+    if (!deletedWorker) {
+      return res.status(404).json({ message: "Worker not found" });
+    }
+    res.status(200).json({ message: "Worker deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting worker:", error);
+    res.status(500).json({ message: "Server error deleting worker", error: error.message });
+  }
+};
+
 module.exports = {
   shopOwnerRegister,
   shopOwnerLogin,
@@ -479,6 +499,7 @@ module.exports = {
   addWorker,
   fetchWorkers,
   fetchWorkerById,
-  updateWorker
+  updateWorker,
+  deleteWorker
 
 };

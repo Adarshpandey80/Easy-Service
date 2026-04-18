@@ -30,10 +30,17 @@ useEffect(() => {
 
 
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this worker?");
-    if (confirmDelete) {
+  const handleDelete = async(id) => {
+    try {
+      const api = import.meta.env.VITE_API_URL;
+      await axios.delete(`${api}/shopowner/Deleteworkers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("shopowner")}`,
+        },
+      });
       setWorkers(workers.filter((worker) => worker._id !== id));
+    } catch (error) {
+      console.error("Error deleting worker:", error);
     }
   };
 
