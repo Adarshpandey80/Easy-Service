@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <>
 
-      {/* <div className='images'>
+      <div className='images'>
         <img src="/Images/AC.webp" alt="AC Photo" />
         <img src="/Images/cooler.jpg" alt="" />
         <img src="/Images/friz.png" alt="" />
@@ -38,7 +38,7 @@ const Home = () => {
         <img src="/Images/washingmachine.avif" alt="" />
         <img src="/Images/waterHeater.jpg" alt="" />
         <img src="/Images/waterPurifier.webp" alt="" />
-      </div> */}
+      </div>
 
       <section className="hero">
         <div className="hero-overlay">

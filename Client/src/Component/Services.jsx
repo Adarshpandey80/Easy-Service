@@ -20,6 +20,7 @@ const Services = () => {
       const api = import.meta.env.VITE_API_URL;
       const response = await axios.get(`${api}/shops/fetchShops`);
       setShopsData(response.data);
+      console.log(response.data);
       console.log("Fetched shops data:", response.data);
     } catch (error) {
       console.error("Error fetching shops data:", error);
