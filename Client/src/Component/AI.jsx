@@ -1,41 +1,122 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../Style/AI.css";
 
 function AI() {
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([
-    {
-      sender: "ai",
-      text: "Hello 👋 I'm Easy-Service AI. How can I help you today?"
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const sendMessage = () => {
-    if (!message.trim()) return;
+  const messagesEndRef = useRef(null);
 
-    const userMsg = {
-      sender: "user",
-      text: message
-    };
+  const api = `${import.meta.env.VITE_API_URL}/ai/request/text`;
 
-    setChat((prev) => [...prev, userMsg]);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
 
-    setTimeout(() => {
-      setChat((prev) => [
+  const handleSend = async (e) => {
+    e.preventDefault();
+
+    if (!input.trim() || loading) return;
+
+    const currentMessage = input;
+
+    // Add user message
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "user",
+        text: currentMessage,
+      },
+    ]);
+
+    setInput("");
+    setLoading(true);
+
+    try {
+      const response = await fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: currentMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get AI response");
+      }
+
+      // Add empty AI message
+      setMessages((prev) => [
         ...prev,
         {
-          sender: "ai",
-          text: "I can help with service recommendations, troubleshooting, booking guidance, and repair suggestions."
-        }
+          role: "ai",
+          text: "",
+        },
       ]);
-    }, 1000);
 
-    setMessage("");
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      let aiText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) break;
+
+        const chunk = decoder.decode(value, {
+          stream: true,
+        });
+
+        // SSE handling
+        const lines = chunk.split("\n");
+
+        for (let line of lines) {
+          if (!line.startsWith("data:")) continue;
+
+          const data = line.replace("data:", "").trim();
+
+          if (data === "[DONE]") {
+            setLoading(false);
+            return;
+          }
+
+          aiText += data;
+
+          setMessages((prev) => {
+            const updated = [...prev];
+
+            updated[updated.length - 1] = {
+              role: "ai",
+              text: aiText,
+            };
+
+            return updated;
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          text: "❌ Something went wrong. Please try again.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="ai-page">
-
       <div className="ai-header">
         <h1>🤖 Easy-Service AI Assistant</h1>
         <p>
@@ -44,44 +125,47 @@ function AI() {
         </p>
       </div>
 
-      <div className="suggestion-container">
-        <button>My AC is not cooling</button>
-        <button>Recommend a technician</button>
-        <button>How much does AC repair cost?</button>
-        <button>Temporary fix for water leakage</button>
-      </div>
-
       <div className="chat-container">
-
         <div className="chat-messages">
-          {chat.map((msg, index) => (
+          {messages.map((msg, index) => (
             <div
               key={index}
-              className={`chat-bubble ${msg.sender}`}
+              className={`chat-bubble ${msg.role}`}
             >
               {msg.text}
+
+              {loading &&
+                index === messages.length - 1 &&
+                msg.role === "ai" && (
+                  <span className="cursor">▌</span>
+                )}
             </div>
           ))}
+
+          <div ref={messagesEndRef} />
         </div>
 
-        <div className="chat-input">
+        <form
+          className="chat-input"
+          onSubmit={handleSend}
+        >
           <input
             type="text"
             placeholder="Ask Easy-Service AI..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && sendMessage()
+            value={input}
+            onChange={(e) =>
+              setInput(e.target.value)
             }
           />
 
-          <button onClick={sendMessage}>
-            Send
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "..." : "Send"}
           </button>
-        </div>
-
+        </form>
       </div>
-
     </div>
   );
 }

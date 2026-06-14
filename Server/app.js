@@ -14,6 +14,7 @@ const shopOwnerRoutes = require("./src/routes/shopOwnerRoutes");
 const kycRoutes = require("./src/routes/kycRoutes");
 const fetchShopsRoutes = require("./src/routes/fetchShopsRoute");
 const chatRoutes = require("./src/routes/chatRoutes");
+const AIroutes = require("./src/routes/AIroutes");
 const { saveMessage } = require("./src/controllars/chatController");
 
 
@@ -136,6 +137,7 @@ app.use("/shopowner" , shopOwnerRoutes);
 app.use("/kyc", kycRoutes);
 app.use("/shops" , fetchShopsRoutes);
 app.use("/chat", chatRoutes);
+app.use("/ai", AIroutes);
 
 // Server Start
 const PORT = process.env.PORT || 8000;
