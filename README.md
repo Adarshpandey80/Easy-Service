@@ -45,3 +45,6 @@ Easy-Service is a full-stack MERN-based service marketplace platform that connec
 * Voice-based AI assistant
 * Multi-language support
 * Advanced analytics dashboard
+
+License
+This project is licensed under the MIT License.
